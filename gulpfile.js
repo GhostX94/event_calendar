@@ -20,7 +20,8 @@ elixir(mix => {
     /*mix.sass('app.scss')
        .webpack('app.js');*/
        
-    mix.styles(['styles.css']);
+    mix.styles(['styles.css'], 'public/css/styles.css');
+    mix.styles(['vue-styles.css'], 'public/css/vue-styles.css');
 
     mix.browserify('app.js', 'public/js/app.js');
 });
