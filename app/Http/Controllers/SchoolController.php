@@ -19,9 +19,9 @@ class SchoolController extends Controller
 		$this->repository = $schoolRepository;
    }
 
-   public function index($value='')
+   public function index(Request $request)
    {
-   	# code...
+ 		
    }
 
 }
