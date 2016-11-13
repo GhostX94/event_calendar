@@ -17,6 +17,28 @@ Route::get('/', function () {
 
 
 
-Route::get('/admin', function () {
-    return view('admin.content');
+
+Route::group(['prefix' => 'admin'], function () {	
+
+	Route::get('/dashboard', function () {
+    	return view('admin.content');
+	});
+
+	/* 
+	 * ------------------- Route index for Schools ---------------
+	 */
+	Route::group(['prefix' => 'schools'], function(){
+
+	Route::get('',[
+			'as' => 'schools.index',
+			'uses' => function(){
+				return view('admin.schools.index');
+			}
+		]);
+	});
+
+
 });
+
+
+
