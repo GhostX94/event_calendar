@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Illuminate\Http\Request;
+
 use App\Calendar\School\SchoolRepository;
 
 private $repository;
@@ -16,4 +18,10 @@ class SchoolController extends Controller
    {
 		$this->repository = $schoolRepository;
    }
+
+   public function index($value='')
+   {
+   	# code...
+   }
+
 }
