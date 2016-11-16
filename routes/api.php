@@ -33,6 +33,11 @@ Route::group(['prefix' => 'admin'], function ()
 				'as' => 'api.schools.index',
 				'uses' => 'SchoolController@index'
 		]);
+
+		Route::get('show/{id?}', [
+			'as' => 'api.schools.show',
+			'uses' => 'SchoolController@show'
+		]);
 	});
 
 });
