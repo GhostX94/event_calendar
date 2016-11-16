@@ -11,5 +11,10 @@ class School extends Model
 	use SearchTrait, SortTrait;
 
 	public $table = 'schools';
+
 	protected $fillable = ['name'];
+
+	protected $searchableColumns = [
+		'name'
+	];
 }
