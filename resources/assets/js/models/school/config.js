@@ -1,4 +1,11 @@
-// fields definition
+
+var objectRow = {            
+    id: "",
+    name: "",
+    created_at: "",
+    updated_at: ""
+};
+
 var tableColumns = [
     {
         name: 'id',
