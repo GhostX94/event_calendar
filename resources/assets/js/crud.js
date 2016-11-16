@@ -119,7 +119,7 @@ Vue.component('custom-action', {
         data: {
             searchFor: '',
             algo: info,
-            fields: tableColumns,
+            columns: tableColumns,
             sortOrder: [{
                 field: fieldInitOrder,
                 direction: 'asc'
@@ -172,9 +172,7 @@ Vue.component('custom-action', {
                     '</a>'
                 ].join('')
             },
-            address: function (value) {
-                return value.line1;
-            },
+           
             /**
              * Other functions
              */
