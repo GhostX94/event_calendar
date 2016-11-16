@@ -10,10 +10,11 @@
 	class SchoolRepository extends BaseRepository
 	{
 		
-		function __construct(argument)
+		function __construct()
 		{
 			$this->setModel(new School);
 		}
 	}
 
 ?>
+
