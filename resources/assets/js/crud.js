@@ -121,7 +121,7 @@ Vue.component('custom-action', {
             infoModal: false,
             showModal: false,
             deleteModal: false,
-            lastOpenModal: false,
+            lastOpenModal: [],
             localModals: (typeof(modals) !== 'undefined' ? modals : {}),
             url: apiUrl,
             row: objectRow,
@@ -270,9 +270,62 @@ Vue.component('custom-action', {
             //         return (sort.direction === 'desc' ? '+' : '') + sort.field
             //     }).join(',')
             // }
+            success2: function(response){
+                var map = 'row';
+                var data = response.data.data;
+                this.$set(map, data);
+                console.log(response);
+            },
 
-            sendData: function(){
+            failed: function(response){
+                console.log(response);
+            },
+
+            getData: function(url = null){
+                if (!url) {
+                    this.sendData(this.url.show + this.row.id, 'GET')
+                    .then(this.success2, this.failed);                
+                } else {
+                   this.sendData(url, 'GET')
+                    .then(this.success2, this.failed);    
+                }
+            },
+
+            cleanData: function() {
+                this.row = objectRow;
+                /*this.flashMessage = '';
+                this.flashType = '';*/
+            },
+
+            sendData: function(callUrl, method, data = {}){
                 return this.$http({url: callUrl, method: method, data: data});
+            },
+
+            visible: function(field) {
+            for (var column in this.columns) {
+                if (this.columns[column].name == field || 
+                    this.columns[column].name == field + '_format' ||
+                    this.columns[column].name == field + '_name') 
+                    return this.columns[column].visible;
+            }
+            return false;
+            },
+            modal: function(type){
+                if (type == 'SHOW') {
+                    this.lastOpenModal.push('showModal');
+                    this.method = type;
+                    this.showModal = true;
+                }
+            },
+            closeModal : function(modalName){
+                if (modalName == this.lastOpenModal[ this.lastOpenModal.length - 1 ])
+                    this.lastOpenModal.pop();
+                            
+                if (this.localModals[modalName] != undefined)
+                    this.localModals[modalName]    = false;
+                else
+                    this.$set(modalName, false);
+                this.cleanData();  
             }
         },
         events: {
@@ -292,9 +345,9 @@ Vue.component('custom-action', {
                 console.log('vuetable:action', action, data)
 
                 this.row.id = data.id;
-
+                this.getData();
                 if (action == 'view-item') {
-                    sweetAlert(action, data.name)
+                    this.modal('SHOW');
                 } else if (action == 'edit-item') {
                     sweetAlert(action, data.name)
                 } else if (action == 'delete-item') {
