@@ -121,7 +121,7 @@ Vue.component('custom-action', {
             algo: info,
             fields: tableColumns,
             sortOrder: [{
-                field: 'name',
+                field: fieldInitOrder,
                 direction: 'asc'
             }],
             multiSort: true,
