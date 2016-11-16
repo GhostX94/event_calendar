@@ -16,3 +16,23 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::get('/testApi', function(){
+	echo "Api";
+});
+
+Route::group(['prefix' => 'admin'], function () 
+{	
+
+	/* 
+	 * ------------------- Route index for Schools ---------------
+	 */
+	Route::group(['prefix' => 'schools'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.schools.index',
+				'uses' => 'SchoolController@index'
+		]);
+	});
+
+});
