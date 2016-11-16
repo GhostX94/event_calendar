@@ -18,9 +18,9 @@
     <div class="col-md-7 form-inline">
         <div class="form-inline form-group">
             <label>Search:</label>
-            <input class="form-control">
-            <button class="btn btn-primary">Go</button>
-            <button class="btn btn-default">Reset</button>
+            <input v-model="searchFor" class="form-control" @keyup.enter="setFilter">
+            <button class="btn btn-primary" @click="setFilter">Go</button>
+            <button class="btn btn-default" @click="resetFilter">Reset</button>
         </div>
     </div>
     <div class="col-md-5">
@@ -62,5 +62,8 @@
 
 @push('scripts-content')
     {!! Html::script('js/models/school/config.js') !!}
+    <script type="text/javascript">
+        var fieldInitOrder = 'id';
+    </script>
     {!! Html::script('js/crud.js') !!}
 @endpush
