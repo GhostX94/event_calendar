@@ -118,7 +118,6 @@ Vue.component('custom-action', {
         //mixins: [mixin],
         data: {
             searchFor: '',
-            algo: info,
             columns: tableColumns,
             sortOrder: [{
                 field: fieldInitOrder,
