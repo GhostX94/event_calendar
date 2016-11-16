@@ -328,8 +328,6 @@
         }
     ]
 
-    var info = "Hola";
-
     var fieldInitOrder = 'id';
     /*var mixin = {
       methods: {
