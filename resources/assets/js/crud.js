@@ -270,6 +270,10 @@ Vue.component('custom-action', {
             //         return (sort.direction === 'desc' ? '+' : '') + sort.field
             //     }).join(',')
             // }
+
+            sendData: function(){
+                return this.$http({url: callUrl, method: method, data: data});
+            }
         },
         events: {
             'vuetable:row-changed': function(data) {
@@ -286,6 +290,9 @@ Vue.component('custom-action', {
             },
             'vuetable:action': function(action, data) {
                 console.log('vuetable:action', action, data)
+
+                this.row.id = data.id;
+
                 if (action == 'view-item') {
                     sweetAlert(action, data.name)
                 } else if (action == 'edit-item') {
