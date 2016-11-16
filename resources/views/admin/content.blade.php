@@ -3,8 +3,8 @@
 @section('title', 'Admin')
 
 @push('styles')
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-	{!! Html::style('css/all.css') !!}
+	{!! Html::style('css/styles.css') !!}
+    @stack("styles-content")
 @endpush
 
 @section('main-content')
@@ -158,8 +158,6 @@
 
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
   $(document).ready(function () {
     $('[data-toggle=offcanvas]').click(function () {
@@ -178,4 +176,5 @@
     });
   });
 </script>
+@stack("scripts-content")
 @endpush
