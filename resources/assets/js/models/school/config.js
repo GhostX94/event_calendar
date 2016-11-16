@@ -2,24 +2,29 @@
         var tableColumns = [
             {
                 name: 'id',
-                title: '',
-                dataClass: 'text-center',
-                callback: 'showDetailRow'
+                title: 'id',
+                sortField: 'id',
+                visible:false
             },
             {
                 name: 'name',
                 sortField: 'name',
             },
             {
-                name: '__component:custom-action',
-                title: "Component",
-                titleClass: 'center aligned',
-                dataClass: 'custom-action center aligned',
+                name: 'created_at',
+                title: 'Creado en',
+                sortField: 'created_at',
+                visible: false
             },
+            {
+                name: 'updated_at',
+                title: 'Actualizado en',
+                sortField: 'updated_at',
+                visible: false
+            }, 
             {
                 name: '__actions',
                 dataClass: 'text-center',
             }
         ]
 
-        var info = "Mensaje";
