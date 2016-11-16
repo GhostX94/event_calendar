@@ -22,6 +22,21 @@ elixir(mix => {
        
     mix.styles(['styles.css'], 'public/css/styles.css');
     mix.styles(['vue-styles.css'], 'public/css/vue-styles.css');
+    mix.styles([
+    	'bootstrap/3.3.7/bootstrap.min.css',
+    	'font-awesome/4.5.0/font-awesome.min.css'
+    	], 
+    	'public/css/app.min.css');
 
-    mix.browserify('app.js', 'public/js/app.js');
+    mix.scripts([
+        'jquery/3.1.0/jquery-3.1.0.min.js', 
+    	'bootstrap/3.3.7/bootstrap.min.js'      
+    ], 'public/js/app.min.js');
+
+
+    mix.browserify('crud.js', 'public/js/crud.js');
+
+   	mix.scripts(['models/school/config.js'], 'public/js/models/school/config.js')
+
+
 });
