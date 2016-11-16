@@ -11,7 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $responseArray = ['success' => false]
+    protected $responseArray = ['success' => false];
 
     public function setSuccess($success = false)
 	{
@@ -27,7 +27,7 @@ class Controller extends BaseController
 	{
 		return response()->json($this->responseArray);
 	}
-		
+
 	public function addToResponseArray($key, $value)
 	{
 		$this->responseArray[$key] = $value;
