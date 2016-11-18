@@ -18,6 +18,7 @@
     @include('admin.schools.table')
 
     <!--Modals-->
+    @include('admin.schools.form')
     @include('admin.schools.show')
 
 </div>
@@ -26,6 +27,7 @@
 @push('scripts-content')
     {!! Html::script('js/models/school/config.js') !!}
     <script type="text/javascript">
+        var token = '{{ csrf_token() }}';
         var fieldInitOrder = 'id';
         var apiUrl = {
             show: "{{ route('api.schools.show') }}/"
