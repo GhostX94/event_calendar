@@ -43,6 +43,19 @@ class SchoolController extends Controller
 		}	
 	}
 
+	public function store(Request $request)
+	{
+		if (request()->ajax()) 
+		{
+			$input = $request->all();
+			$school = $this->repository->create($input);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'School saved');
+			$this->addToResponseArray('data', $school->toArray());
+			return $this->getResponseArrayJson();
+		}
+	}
+
 	public function show(Request $request, $id)
 	{
 		if (request()->ajax()) 
