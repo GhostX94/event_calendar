@@ -49,6 +49,11 @@ Route::group(['prefix' => 'admin'], function ()
 			'uses' => 'SchoolController@store'
 		]);
 
+		Route::delete('delete/{id?}', [
+			'as' => 'api.schools.destroy',
+			'uses' => 'SchoolController@destroy'
+		]);
+
 	});
 
 });
