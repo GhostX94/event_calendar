@@ -11,7 +11,8 @@
     <div class="row">
         <h1 class="pull-left">Almacen</h1>
         <h1 class="pull-right">
-            <a class="btn btn-primary pull-right" href="#" style="margin-top: -10px;margin-bottom: 5px">Añadir nuevo</a>
+            <a class="btn btn-primary pull-right" href="#" style="margin-top: -10px;margin-bottom: 5px"
+            @click="modal('POST')">Añadir nuevo</a>
         </h1>
     </div>
     <!--Include table for items type schools-->
@@ -30,7 +31,9 @@
         var token = '{{ csrf_token() }}';
         var fieldInitOrder = 'id';
         var apiUrl = {
-            show: "{{ route('api.schools.show') }}/"
+            store: "{{ route('api.schools.store') }}/",
+            show: "{{ route('api.schools.show') }}/",
+            update: "{{ route('api.schools.update') }}/"
         };
     </script>
     {!! Html::script('js/crud.js') !!}
