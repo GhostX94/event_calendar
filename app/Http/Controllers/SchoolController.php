@@ -72,4 +72,17 @@ class SchoolController extends Controller
 		}
 	}
 
+	public function update($id, Request $request)
+	{
+		if (request()->ajax()) 
+		{
+			$input = $request->all();
+			$school = $this->repository->update($input);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'School update');
+			$this->addToResponseArray('data', $school->toArray());
+			return $this->getResponseArrayJson();
+		}
+	}
+
 }
