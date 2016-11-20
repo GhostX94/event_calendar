@@ -10,10 +10,19 @@
 	class SchoolRepository extends BaseRepository
 	{
 		
-		function __construct()
+		public function __construct()
 		{
 			$this->setModel(new School);
 		}
+
+
+		public function update($data = array())
+		{
+			$school = $this->get($data['id']);
+			$school->update($data);
+			return $school;
+		}
+
 	}
 
 ?>
