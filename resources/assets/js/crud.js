@@ -17,11 +17,11 @@ var VuetablePaginationBootstrap = require('vuetable/src/components/VuetablePagin
 var VueStrap = require('vue-strap/dist/vue-strap.min.js')
 //var vSelect = require('vue-select')
 //var CustomVueSelectTemplate = require('./vue-components/vue-select.vue')
-//var VueValidator = require('vue-validator')
+var VueValidator = require('vue-validator/dist/vue-validator.min.js')
 
 Vue.use(VueResource)
-/*Vue.use(VueEditable)
-Vue.use(VueValidator)*/
+/*Vue.use(VueEditable)*/
+Vue.use(VueValidator)
 
 //Vue.component('v-select', vSelect)
 Vue.component('vuetable', Vuetable);
@@ -36,6 +36,17 @@ var E_SERVER_ERROR = 'Error communicating with the server';
 
 Vue.config.debug = true
 Vue.config.devtools = true  
+
+Vue.http.options.emulateJSON = true;
+Vue.http.options.emulateHTTP = true;
+
+
+/*Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+
+    next();
+});*/
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -270,11 +281,50 @@ Vue.component('custom-action', {
             //         return (sort.direction === 'desc' ? '+' : '') + sort.field
             //     }).join(',')
             // }
+            submit: function(model = null, type = null, related = null){
+                this.row._token = token;
+                //Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#_token').getAttribute('value');
+                Vue.http.headers.common['X-CSRF-TOKEN'] = token;
+                var data = this.row;
+                var formData = new FormData(data);
+                if (!model || model.target) {
+                    //var actionUrl = this.url.store;
+                    var actionUrl = "";
+                    if (this.method == 'PATCH' || this.method == 'POST') {
+                        if (this.method == 'PATCH') {
+                            actionUrl = this.url.update + this.row.id;
+                            this.$http.patch(actionUrl, data)
+                            .then(this.success, this.failed);
+                        }else if(this.method == 'POST'){
+                            actionUrl = this.url.store;
+                            this.$http.post(actionUrl, data)
+                            .then(this.success, this.failed);
+                        }
+                    }else if(this.method == 'DELETE'){
+                        actionUrl = this.url.delete + this.row.id;
+                    }
+                     
+                    /*this.sendData(actionUrl, this.method, data)
+                        .then(this.success, this.failed);*/
+                }
+            },
+            success: function(response){
+                var map = 'row';
+                var data = response.data.data;
+                this.$set(map, data);
+                console.log("success");
+                console.log(JSON.stringify(response.data));  
+                if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE')
+                    this.$broadcast('vuetable:reload'); 
+            },
             success2: function(response){
                 var map = 'row';
                 var data = response.data.data;
                 this.$set(map, data);
-                console.log(response);
+                console.log("success2");
+                console.log(JSON.stringify(response.data));
+                if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE')
+                    this.$broadcast('vuetable:reload');
             },
 
             failed: function(response){
@@ -297,9 +347,9 @@ Vue.component('custom-action', {
                 this.flashType = '';*/
             },
 
-            sendData: function(callUrl, method, data = {}){
+             sendData: function(callUrl, method, data = {}) {
                 return this.$http({url: callUrl, method: method, data: data});
-            },
+            }, 
 
             visible: function(field) {
             for (var column in this.columns) {
@@ -311,7 +361,11 @@ Vue.component('custom-action', {
             return false;
             },
             modal: function(type){
-                if (type == 'SHOW') {
+                if (type == 'PATCH' || type == 'POST') {
+                    this.lastOpenModal.push('formModal');
+                    this.method = type;
+                    this.formModal = true;
+                }else if (type == 'SHOW') {
                     this.lastOpenModal.push('showModal');
                     this.method = type;
                     this.showModal = true;
@@ -330,7 +384,7 @@ Vue.component('custom-action', {
         },
         events: {
             'vuetable:row-changed': function(data) {
-                console.log('row-changed:', data.name)
+                //console.log('row-changed:', data.name)
             },
             'vuetable:row-clicked': function(data, event) {
                 console.log('row-clicked:', data.name)
@@ -349,14 +403,14 @@ Vue.component('custom-action', {
                 if (action == 'view-item') {
                     this.modal('SHOW');
                 } else if (action == 'edit-item') {
-                    sweetAlert(action, data.name)
+                    this.modal('PATCH');
                 } else if (action == 'delete-item') {
                     sweetAlert(action, data.name)
                 }
             },
             'vuetable:load-success': function(response) {
                 var data = response.data.data
-                console.log(response.data)
+                //console.log(response.data)
                 /*if (this.searchFor !== '') {
                     for (n in data) {
                         data[n].name = this.highlight(this.searchFor, data[n].name)
