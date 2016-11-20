@@ -302,6 +302,8 @@ Vue.component('custom-action', {
                         }
                     }else if(this.method == 'DELETE'){
                         actionUrl = this.url.delete + this.row.id;
+                        this.$http.delete(actionUrl, data).
+                        then(this.success, this.failed);
                     }
                      
                     /*this.sendData(actionUrl, this.method, data)
