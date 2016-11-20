@@ -38,6 +38,17 @@ Route::group(['prefix' => 'admin'], function ()
 			'as' => 'api.schools.show',
 			'uses' => 'SchoolController@show'
 		]);
+
+		Route::patch('update/{id?}', [
+			'as' => 'api.schools.update',
+			'uses' => 'SchoolController@update'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.schools.store',
+			'uses' => 'SchoolController@store'
+		]);
+
 	});
 
 });
