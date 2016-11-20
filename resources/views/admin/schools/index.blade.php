@@ -33,7 +33,8 @@
         var apiUrl = {
             store: "{{ route('api.schools.store') }}/",
             show: "{{ route('api.schools.show') }}/",
-            update: "{{ route('api.schools.update') }}/"
+            update: "{{ route('api.schools.update') }}/",
+            delete: "{{ route('api.schools.destroy') }}/"
         };
     </script>
     {!! Html::script('js/crud.js') !!}
