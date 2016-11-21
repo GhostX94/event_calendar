@@ -8,12 +8,16 @@ use App\Http\Requests;
 
 use App\Calendar\School\SchoolRepository;
 use App\Calendar\School\School;
+use App\Calendar\SchoolPhoto;
 
 class SchoolController extends Controller
 {
 	private $repository;
-	public function __construct(SchoolRepository $schoolRepository)
-	{
+	private $schoolPhotoRepository;
+
+	public function __construct(SchoolRepository $schoolRepository, 
+		SchoolPhoto  $schoolPhotoRepository){
+		$this->schoolPhotoRepository = $schoolPhotoRepository,
 		$this->repository = $schoolRepository;
 	}
 
@@ -95,11 +99,6 @@ class SchoolController extends Controller
 			$this->addToResponseArray('message', 'School delete');
 			return $this->getResponseArrayJson(); 
 		}
-	}
-
-	public function storePhoto(Request $request)
-	{
-		# code...
 	}
 
 }
