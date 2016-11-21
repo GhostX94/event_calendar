@@ -1,8 +1,11 @@
 <?php  
-	namespace App\Store\Upload;
+
+	namespace App\Calendar\Upload;
+
 	use DateTime;
 	use Intervention\Image\Facades\Image;
 	use Symfony\Component\HttpFoundation\File\UploadedFile;
+	
 	class Upload
 	{
 		private $file;
