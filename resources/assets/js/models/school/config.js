@@ -4,7 +4,7 @@ var objectRow = {
     name: "",
     created_at: "",
     updated_at: "",
-    files: []
+    photos: []
 };
 
 var tableColumns = [
