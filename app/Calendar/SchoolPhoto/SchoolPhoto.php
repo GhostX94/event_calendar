@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SchoolPhoto extends Model
 {
-		protected $fillable = ['filename','path','complete_path', 'complete_thumbnail_path', 'size', 'extension', 'mimetype', 'school_id', 'user_id'];
+	public $table = 'schools_photos';
+
+	protected $fillable = ['filename','path','complete_path', 'complete_thumbnail_path', 'size', 'extension', 'mimetype', 'school_id', 'user_id'];
 
 }
