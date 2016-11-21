@@ -66,7 +66,7 @@ class SchoolController extends Controller
 				return $this->getResponseArrayJson();
 			}
 			$this->setSuccess(true);
-			$this->addToResponseArray('message', 'School found');
+			$this->addToResponseArray('message', 'School data retrieved correctly');
 			$this->addToResponseArray('data', $school->toArray());
 			return $this->getResponseArrayJson();
 		}
@@ -82,6 +82,18 @@ class SchoolController extends Controller
 			$this->addToResponseArray('message', 'School update');
 			$this->addToResponseArray('data', $school->toArray());
 			return $this->getResponseArrayJson();
+		}
+	}
+
+	public function destroy($id, Request $request)
+	{
+		if (request()->ajax()) 
+		{
+			$input = $request->all();
+			$this->repository->delete($id);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'School delete');
+			return $this->getResponseArrayJson(); 
 		}
 	}
 
