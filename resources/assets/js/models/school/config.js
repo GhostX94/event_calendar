@@ -3,7 +3,8 @@ var objectRow = {
     id: "",
     name: "",
     created_at: "",
-    updated_at: ""
+    updated_at: "",
+    files: []
 };
 
 var tableColumns = [
