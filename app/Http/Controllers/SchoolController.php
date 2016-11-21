@@ -97,4 +97,9 @@ class SchoolController extends Controller
 		}
 	}
 
+	public function storePhoto(Request $request)
+	{
+		# code...
+	}
+
 }
