@@ -21,7 +21,7 @@
     <!--Modals-->
     @include('admin.schools.form')
     @include('admin.schools.show')
-
+    @include('admin.schools.delete')
 </div>
 @endsection
 
