@@ -21,5 +21,8 @@
     "vue-validator": "^2.1.3",
     "vueify": "^8.5.4",
     "vuetable": "^1.1.2"
+  },
+  "dependencies": {
+    "vue-upload-component": "^0.3.8"
   }
 }
