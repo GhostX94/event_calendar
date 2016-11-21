@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use App\Calendar\School\SchoolRepository;
 use App\Calendar\School\School;
-use App\Calendar\SchoolPhoto;
+use App\Calendar\SchoolPhoto\SchoolPhotoRepository;
 
 class SchoolController extends Controller
 {
@@ -16,8 +16,8 @@ class SchoolController extends Controller
 	private $schoolPhotoRepository;
 
 	public function __construct(SchoolRepository $schoolRepository, 
-		SchoolPhoto  $schoolPhotoRepository){
-		$this->schoolPhotoRepository = $schoolPhotoRepository,
+		SchoolPhotoRepository $schoolPhotoRepository){
+		$this->schoolPhotoRepository = $schoolPhotoRepository;
 		$this->repository = $schoolRepository;
 	}
 
