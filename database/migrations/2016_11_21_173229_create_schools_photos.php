@@ -22,8 +22,16 @@ class CreateSchoolsPhotos extends Migration
             $table->integer('size');
             $table->string('extension', 3);
             $table->string('mimetype', 32);
-            $table->integer('product_id')->unsigned()->index();
-            $table->integer('user_id')->unsigned()->index();
+            $table->integer('school_id')->unsigned();
+            $table->foreign('school_id')
+                ->references('id')->on('schools')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +43,12 @@ class CreateSchoolsPhotos extends Migration
      */
     public function down()
     {
+        Schema::table('schools_photos', function (Blueprint $table) {
+            $table->dropForeign('schools_photos_school_id_foreign');
+            $table->dropColumn('school_id');
+            $table->dropForeign('schools_photos_user_id_foreign');
+            $table->dropColumn('user_id');
+        });
         Schema::dropIfExists('schools_photos');
     }
 }
