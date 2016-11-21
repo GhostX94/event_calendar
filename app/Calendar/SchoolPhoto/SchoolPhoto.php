@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Calendar\School;
+namespace App\Calendar\SchoolPhoto;
 
 use Illuminate\Database\Eloquent\Model;
 
