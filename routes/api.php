@@ -54,6 +54,12 @@ Route::group(['prefix' => 'admin'], function ()
 			'uses' => 'SchoolController@destroy'
 		]);
 
+		Route::post('photos/{id?}', [
+			'as' => 'api.schools.store.photos',
+			'uses' => 'SchoolController@storePhoto'
+		]);
+
+
 	});
 
 });

@@ -23,6 +23,7 @@
     "vuetable": "^1.1.2"
   },
   "dependencies": {
+    "vue-fullcalendar": "^0.1.11",
     "vue-upload-component": "^0.3.8"
   }
 }

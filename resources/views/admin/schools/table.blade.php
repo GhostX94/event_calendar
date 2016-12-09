@@ -59,7 +59,7 @@
   wrapper-class="vuetable-wrapper"
   table-wrapper=".vuetable-wrapper"
   loading-class="loading"
-  detail-row-component="my-detail-row"
+  detail-row-component=""
   detail-row-id="id"
   detail-row-transition="expand"
   row-class-callback="rowClassCB"

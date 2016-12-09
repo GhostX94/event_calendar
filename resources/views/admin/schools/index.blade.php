@@ -38,4 +38,10 @@
         };
     </script>
     {!! Html::script('js/crud.js') !!}
+    <script type="text/javascript">
+        var vm = window.vm;
+        vm.$watch('formModal', function(value) {
+            console.log('formModal: ' + value);
+        });
+    </script>
 @endpush

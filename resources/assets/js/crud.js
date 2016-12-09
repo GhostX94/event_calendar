@@ -19,6 +19,10 @@ var VueStrap = require('vue-strap/dist/vue-strap.min.js')
 //var CustomVueSelectTemplate = require('./vue-components/vue-select.vue')
 var VueValidator = require('vue-validator/dist/vue-validator.min.js')
 
+var VueFileUpload = require('vue-upload-component/dist/vue-upload-component.min.js');
+
+var VueFullCalendar = require('vue-fullcalendar/dist/vue-fullcalendar.min.js')
+
 Vue.use(VueResource)
 /*Vue.use(VueEditable)*/
 Vue.use(VueValidator)
@@ -29,7 +33,8 @@ Vue.component('vuetable-pagination', VuetablePagination)
 Vue.component('vuetable-pagination-dropdown', VuetablePaginationDropdown)
 Vue.component('vuetable-pagination-bootstrap', VuetablePaginationBootstrap)
 //Vue.component('vuetable-pagination-simple', VuetablePaginationSimple)
-
+Vue.component('vuefileupload', VueFileUpload)
+Vue.component('v-full-calendar', VueFullCalendar)
 
 
 var E_SERVER_ERROR = 'Error communicating with the server';
@@ -56,7 +61,7 @@ Vue.http.options.emulateHTTP = true;
 
 //Vue.component('example', require('./components/Example.vue'));
 
-Vue.component('custom-action', {
+/*Vue.component('custom-action', {
         template: [
             '<div>',
                 '<button @click="itemAction(\'view-item\', rowData)"><i class="glyphicon glyphicon-zoom-in"></i></button>',
@@ -119,8 +124,8 @@ Vue.component('custom-action', {
             }
         },
     })
-
-    const app = new Vue(
+    */
+    window.vm = new Vue(
     {
         components: {
             modal: VueStrap.modal,
@@ -134,6 +139,8 @@ Vue.component('custom-action', {
             deleteModal: false,
             lastOpenModal: [],
             localModals: (typeof(modals) !== 'undefined' ? modals : {}),
+            flashMessage: null,
+            flashType: null,
             url: apiUrl,
             row: objectRow,
             searchFor: '',
@@ -148,6 +155,12 @@ Vue.component('custom-action', {
             paginationInfoTemplate: 'แสดง {from} ถึง {to} จากทั้งหมด {total} รายการ',
             itemActions: (typeof(actions) !=='undefined' ? actions : {}),
             moreParams: [],
+
+            /*Vue fullcalendar*/
+             fcEvents : (typeof(demoEvents) !== 'undefined' ? demoEvents : {}),
+
+             file: null,
+
         },
         created: function () {
             console.log('Ready')
@@ -285,25 +298,31 @@ Vue.component('custom-action', {
                 this.row._token = token;
                 //Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#_token').getAttribute('value');
                 Vue.http.headers.common['X-CSRF-TOKEN'] = token;
+
+                var formData = new FormData();
+                var keys = Object.keys(this.row);
                 var data = this.row;
-                var formData = new FormData(data);
+                keys.forEach(function (index) {
+                    formData.append(index, data[index]);
+                });
+
                 if (!model || model.target) {
                     //var actionUrl = this.url.store;
                     var actionUrl = "";
                     if (this.method == 'PATCH' || this.method == 'POST') {
                         if (this.method == 'PATCH') {
                             actionUrl = this.url.update + this.row.id;
-                            this.$http.patch(actionUrl, data)
+                            this.$http.patch(actionUrl, formData)
                             .then(this.success, this.failed);
                         }else if(this.method == 'POST'){
                             actionUrl = this.url.store;
-                            this.$http.post(actionUrl, data)
+                            this.$http.post(actionUrl, formData)
                             .then(this.success, this.failed);
                         }
                     }else if(this.method == 'DELETE'){
                         actionUrl = this.url.delete + this.row.id;
-                        this.$http.delete(actionUrl, data).
-                        then(this.success, this.failed);
+                        this.$http.delete(actionUrl, formData)
+                        .then(this.success, this.failed);
                     }
                      
                     /*this.sendData(actionUrl, this.method, data)
@@ -311,28 +330,36 @@ Vue.component('custom-action', {
                 }
             },
             success: function(response){
-                var map = 'row';
-                var data = response.data.data;
-                this.$set(map, data);
-                console.log("success");
-                console.log(JSON.stringify(response.data));  
+                if (response.data.data) {
+                    var map = 'row';
+                    var data = response.data.data;
+                    this.$set(map, data);
+                    console.log("success");
+                    console.log(JSON.stringify(response.data));
+                }
                 if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE')
                     this.$broadcast('vuetable:reload'); 
+                var message = response.data.message;
+                this.flashMessage = message;
+                this.flashType = 'success'; 
             },
             success2: function(response){
-                var map = 'row';
-                var data = response.data.data;
-                this.$set(map, data);
-                console.log("success2");
-                console.log(JSON.stringify(response.data));
+                if (response.data.data) {
+                    var map = 'row';
+                    var data = response.data.data;
+                    this.$set(map, data);
+                    console.log("success2");
+                    console.log(JSON.stringify(response.data));
+                }
                 if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE')
                     this.$broadcast('vuetable:reload');
+                var message = response.data.message;
+                this.flashMessage = message;
+                this.flashType = 'success'; 
             },
-
             failed: function(response){
                 console.log(response);
             },
-
             getData: function(url = null){
                 if (!url) {
                     this.sendData(this.url.show + this.row.id, 'GET')
@@ -342,25 +369,22 @@ Vue.component('custom-action', {
                     .then(this.success2, this.failed);    
                 }
             },
-
             cleanData: function() {
                 this.row = objectRow;
                 /*this.flashMessage = '';
                 this.flashType = '';*/
             },
-
-             sendData: function(callUrl, method, data = {}) {
+            sendData: function(callUrl, method, data = {}) {
                 return this.$http({url: callUrl, method: method, data: data});
             }, 
-
             visible: function(field) {
-            for (var column in this.columns) {
-                if (this.columns[column].name == field || 
-                    this.columns[column].name == field + '_format' ||
-                    this.columns[column].name == field + '_name') 
-                    return this.columns[column].visible;
-            }
-            return false;
+                for (var column in this.columns) {
+                    if (this.columns[column].name == field || 
+                        this.columns[column].name == field + '_format' ||
+                        this.columns[column].name == field + '_name') 
+                        return this.columns[column].visible;
+                }
+                return false;
             },
             modal: function(type){
                 if (type == 'PATCH' || type == 'POST') {
@@ -371,17 +395,42 @@ Vue.component('custom-action', {
                     this.lastOpenModal.push('showModal');
                     this.method = type;
                     this.showModal = true;
+                }else if (type == 'DELETE') {
+                    this.lastOpenModal.push('deleteModal');
+                    this.method = type;
+                    this.deleteModal = true;
                 }
             },
-            closeModal : function(modalName){
-                if (modalName == this.lastOpenModal[ this.lastOpenModal.length - 1 ])
+            closeModal: function(modalName){
+                if (modalName == this.lastOpenModal[this.lastOpenModal.length - 1])
                     this.lastOpenModal.pop();
                             
                 if (this.localModals[modalName] != undefined)
-                    this.localModals[modalName]    = false;
+                    this.localModals[modalName] = false;
                 else
                     this.$set(modalName, false);
                 this.cleanData();  
+                console.log("Cerrado");
+            },
+            onFileChange: function(event){
+                var files = event.target.files || event.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.row.image = files[0];
+                this.createImage(files[0]);
+            },
+            createImage(file) {
+              var image = new Image();
+              var reader = new FileReader();
+
+              reader.onload = (e) => {
+                this.file = e.target.result;
+              };
+              reader.readAsDataURL(file);
+              //console.log(JSON.stringify(this.row));
+            },
+            removeImage: function (e) {
+              this.row.image = '';
             }
         },
         events: {
@@ -407,7 +456,7 @@ Vue.component('custom-action', {
                 } else if (action == 'edit-item') {
                     this.modal('PATCH');
                 } else if (action == 'delete-item') {
-                    sweetAlert(action, data.name)
+                    this.modal('DELETE');
                 }
             },
             'vuetable:load-success': function(response) {
@@ -422,10 +471,23 @@ Vue.component('custom-action', {
             },
             'vuetable:load-error': function(response) {
                 if (response.status == 400) {
-                    sweetAlert('Something\'s Wrong!', response.data.message, 'error')
+                    console.log('Something\'s Wrong!', response.data.message, 'error')
                 } else {
-                    sweetAlert('Oops', E_SERVER_ERROR, 'error')
+                    console.log('Oops', E_SERVER_ERROR, 'error')
                 }
+            },
+
+            changeMonth: function (start, end, current) {
+              console.log('changeMonth', start, end, current)
+            },
+            eventClick: function(event, jsEvent, pos) {
+               console.log('eventClick', event, jsEvent, pos)
+            },
+            dayClick: function(day, jsEvent) {
+              console.log('dayClick', day, jsEvent)
+            },
+            moreClick: function(day, events, jsEvent) {
+              console.log('moreCLick', day, events, jsEvent)
             }
         }
     })

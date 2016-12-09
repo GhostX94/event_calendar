@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('table');
+    return view('fullcalendar');
 });
 
 

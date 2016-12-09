@@ -14,9 +14,7 @@
 			@include('layouts.flash')
 			<div class="box box-primary">
 				<div class="box-body">
-					<div class="row">
-						@yield('modal-form-content')
-					</div>
+					@yield('modal-form-content')
 				</div>
 			</div>
 		</div>
