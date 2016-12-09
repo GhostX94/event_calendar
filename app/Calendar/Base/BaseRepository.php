@@ -2,9 +2,13 @@
 	
 	namespace App\Calendar\Base;
 	
+	use App\Calendar\Upload\Upload;
+ 	use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 	class BaseRepository
 	{
 		protected $model;
+		protected $upload;
 	  
 	    public function setModel($model)
 	    {
@@ -43,6 +47,22 @@
 		{
 			$model = $this->get($id); 
 			return $model->delete();
+		}
+
+		public function registerImage(UploadedFile $file, $publicFilePath = '', $data = array())
+		{
+			$this->upload = new Upload($file, 74, 103, $publicFilePath);
+			$this->upload->process();
+			$result = array_merge($data,[
+				'complete_path' => $this->upload->getCompletePublicFilePath(),
+				'complete_thumbnail_path'=> $this->upload->getCompleteThumbnailPublicFilePath(),
+				'filename' => $this->upload->getFileName(),
+				'path' => $this->upload->getUploadPath(),
+				'extension' => $this->upload->getFileExtension(),
+				'size' => $this->upload->getSize(),
+				'mimetype' => $this->upload->getMimeType(),
+			]);
+			$this->create($result);
 		}
 		
 		public function update($data = array()){}
