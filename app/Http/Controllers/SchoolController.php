@@ -51,10 +51,16 @@ class SchoolController extends Controller
 	{
 		if (request()->ajax()) 
 		{
+			$data = array();
 			$input = $request->all();
 			$school = $this->repository->create($input);
+			$data['school_id'] = $school->id;
+			$data['user_id'] = 1;
 			if ($request->hasFile('image')) {
-				$this->schoolPhotoRepository->register($request->file('image'), $school->id, 1);
+				$this->schoolPhotoRepository->registerImage($request->file('image'), 
+					'storage/schools/', 
+					$data
+				);
 			}
 			$this->setSuccess(true);
 			$this->addToResponseArray('message', 'School saved');
