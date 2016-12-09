@@ -53,9 +53,13 @@ class SchoolController extends Controller
 		{
 			$input = $request->all();
 			$school = $this->repository->create($input);
+			if ($request->hasFile('image')) {
+				$this->schoolPhotoRepository->register($request->file('image'), $school->id, 1);
+			}
 			$this->setSuccess(true);
 			$this->addToResponseArray('message', 'School saved');
 			$this->addToResponseArray('data', $school->toArray());
+			$this->addToResponseArray('request', $input);
 			return $this->getResponseArrayJson();
 		}
 	}
@@ -98,6 +102,25 @@ class SchoolController extends Controller
 			$this->setSuccess(true);
 			$this->addToResponseArray('message', 'School delete');
 			return $this->getResponseArrayJson(); 
+		}
+	}
+
+
+	public function storePhoto(Request $request, $schoolId = null)
+	{
+		if (request()->ajax()) 
+		{
+			if ($request->has('photos')) 
+			{
+				$photos = $request->file('photos');
+				foreach ($photos as $photo) {
+					$this->schoolPhotoRepository->register(
+						$photo, 
+						$schoolId, 
+						1
+					);
+				}
+			}
 		}
 	}
 
