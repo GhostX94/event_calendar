@@ -64,6 +64,16 @@
 			]);
 			$this->create($result);
 		}
+
+		public function removeImage($complete_path, $complete_thumbnail_path, $idPhoto)
+		{
+			if(\File::exists($complete_path) && \File::exists($complete_thumbnail_path))
+			{
+				\File::delete($complete_path);
+				\File::delete($complete_thumbnail_path);
+				$this->delete($idPhoto);
+			}
+		}
 		
 		public function update($data = array()){}
 	}
