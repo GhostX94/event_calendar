@@ -13630,6 +13630,10 @@ window.vm = new Vue({
                 var map = 'row';
                 var data = response.data.data;
                 this.$set(map, data);
+                if (response.data.imageUrl) {
+                    this.file = '/' + response.data.imageUrl;
+                    console.log('image', this.file);
+                }
                 console.log("success2");
                 console.log(JSON.stringify(response.data));
             }
@@ -13708,7 +13712,8 @@ window.vm = new Vue({
         },
 
         removeImage: function removeImage(e) {
-            this.row.image = '';
+            //this.row.image = '';
+            this.file = '';
         }
     },
     events: {
@@ -13731,7 +13736,6 @@ window.vm = new Vue({
             this.getData();
             if (action == 'view-item') {
                 this.modal('SHOW');
-                console.log('showModal', this.showModal);
             } else if (action == 'edit-item') {
                 this.modal('PATCH');
             } else if (action == 'delete-item') {

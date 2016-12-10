@@ -348,8 +348,11 @@ Vue.http.options.emulateHTTP = true;
                     var map = 'row';
                     var data = response.data.data;
                     this.$set(map, data);
-                    console.log("success2");
-                    console.log(JSON.stringify(response.data));
+                    if(response.data.imageUrl){
+                        this.file = '/' + response.data.imageUrl;
+                    }
+                    //console.log("success2");
+                    //console.log(JSON.stringify(response.data));
                 }
                 if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE')
                     this.$broadcast('vuetable:reload');
@@ -430,7 +433,8 @@ Vue.http.options.emulateHTTP = true;
               //console.log(JSON.stringify(this.row));
             },
             removeImage: function (e) {
-              this.row.image = '';
+              //this.row.image = '';
+              this.file = '';
             }
         },
         events: {
