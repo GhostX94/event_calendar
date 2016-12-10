@@ -38,7 +38,29 @@ class School extends Model
 	*/
 	public function photos()
 	{
-		return $this->hasMany('App\Calendar\SchoolPhoto', 'school_id');
+		return $this->hasMany('App\Calendar\SchoolPhoto\SchoolPhoto', 'school_id');
 	}
-	
+
+	/**
+	 *  Check if there are photos associated with the model.
+	*/
+	public function hasPhotos()
+	{
+		return $this->photos->count();
+	}
+
+
+	/**
+	 *  Return the first photo associated with the model.
+	*/
+	public function getFirstPhotoAttribute()
+    {
+        if ($this->hasPhotos()) {
+            foreach ($this->photos as $photo) {
+                return $photo;
+            }
+        }
+        return false;
+    }
+
 }
