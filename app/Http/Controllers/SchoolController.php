@@ -110,24 +110,4 @@ class SchoolController extends Controller
 			return $this->getResponseArrayJson(); 
 		}
 	}
-
-
-	public function storePhoto(Request $request, $schoolId = null)
-	{
-		if (request()->ajax()) 
-		{
-			if ($request->has('photos')) 
-			{
-				$photos = $request->file('photos');
-				foreach ($photos as $photo) {
-					$this->schoolPhotoRepository->register(
-						$photo, 
-						$schoolId, 
-						1
-					);
-				}
-			}
-		}
-	}
-
 }
