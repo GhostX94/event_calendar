@@ -16,15 +16,5 @@ class SchoolPhotoRepository extends BaseRepository
 	{
 		  $this->setModel(new SchoolPhoto);
 	}
-	/*
-	public function remove($complete_path, $complete_thumbnail_path, $idPhoto)
-	{
-		if(\File::exists($complete_path) && \File::exists($complete_thumbnail_path))
-		{
-			\File::delete($complete_path);
-			\File::delete($complete_thumbnail_path);
-			parent::delete($idPhoto);
-		}
-	}*/
 }
 ?>
