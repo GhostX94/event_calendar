@@ -82,7 +82,8 @@ class SchoolController extends Controller
 			$this->setSuccess(true);
 			$this->addToResponseArray('message', 'School data retrieved correctly');
 			$this->addToResponseArray('data', $school->toArray());
-			$this->addToResponseArray('imageUrl', $school->first_photo->complete_path);
+			if($school->hasPhotos())
+				$this->addToResponseArray('imageUrl', $school->first_photo->complete_path);
 			return $this->getResponseArrayJson();
 		}
 	}
@@ -122,8 +123,19 @@ class SchoolController extends Controller
 		if (request()->ajax()) 
 		{
 			$input = $request->all();
-			$this->repository->delete($id);
-			$this->setSuccess(true);
+			$school = $this->repository->get($id);
+            if ($school->hasPhotos()) 
+            {
+                foreach ($school->photos as $photo) 
+                {
+                    $this->schoolPhotoRepository->removeImage(
+                        $photo->complete_path, 
+                        $photo->complete_thumbnail_path, 
+                        $photo->id
+                    );
+                }
+            }
+			$this->setSuccess($this->repository->delete($id));
 			$this->addToResponseArray('message', 'School delete');
 			return $this->getResponseArrayJson(); 
 		}
