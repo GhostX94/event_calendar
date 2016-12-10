@@ -32,4 +32,13 @@ class School extends Model
 	protected $searchableColumns = [
 		'name'
 	];
+
+	/**
+	 * Get the picture for school.
+	*/
+	public function photos()
+	{
+		return $this->hasMany('App\Calendar\SchoolPhoto', 'school_id');
+	}
+	
 }
