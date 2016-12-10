@@ -82,6 +82,7 @@ class SchoolController extends Controller
 			$this->setSuccess(true);
 			$this->addToResponseArray('message', 'School data retrieved correctly');
 			$this->addToResponseArray('data', $school->toArray());
+			$this->addToResponseArray('imageUrl', $school->first_photo->complete_path);
 			return $this->getResponseArrayJson();
 		}
 	}
@@ -92,6 +93,23 @@ class SchoolController extends Controller
 		{
 			$input = $request->all();
 			$school = $this->repository->update($input);
+			$data['school_id'] = $school->id;
+			$data['user_id'] = 1;
+			if($request->hasFile('image'))
+			{
+				if ($school->hasPhotos()) 
+				{
+					$this->schoolPhotoRepository->removeImage(
+							$school->first_photo->complete_path, 
+							$school->first_photo->complete_thumbnail_path, 
+							$school->first_photo->id
+						); 
+				}
+				$this->schoolPhotoRepository->registerImage($request->file('image'), 
+					'storage/schools/', 
+					$data
+				);
+			}
 			$this->setSuccess(true);
 			$this->addToResponseArray('message', 'School update');
 			$this->addToResponseArray('data', $school->toArray());
