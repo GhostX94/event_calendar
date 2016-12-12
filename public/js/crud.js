@@ -13458,6 +13458,9 @@ window.vm = new Vue({
         lastOpenModal: [],
         localModals: typeof modals !== 'undefined' ? modals : {},
         flashMessage: null,
+        defaultErrorMessage: 'Some errors in sended data, please check!.',
+        flashTypeDanger: 'danger',
+        errorMessages: '',
         flashType: null,
         url: apiUrl,
         row: objectRow,
@@ -13632,10 +13635,9 @@ window.vm = new Vue({
                 this.$set(map, data);
                 if (response.data.imageUrl) {
                     this.file = '/' + response.data.imageUrl;
-                    console.log('image', this.file);
                 }
-                console.log("success2");
-                console.log(JSON.stringify(response.data));
+                //console.log("success2");
+                //console.log(JSON.stringify(response.data));
             }
             if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE') this.$broadcast('vuetable:reload');
             var message = response.data.message;
@@ -13644,6 +13646,24 @@ window.vm = new Vue({
         },
         failed: function failed(response) {
             console.log(response);
+            this.flashMessage = this.defaultErrorMessage;
+            this.flashType = this.flashTypeDanger;
+            if (response.data) {
+                vm.updateErrors(response.data);
+                //console.log("errors", response.data);
+            }
+            //console.log("response", response.data);
+        },
+        updateErrors: function updateErrors(errors) {
+            this.errorMessages = [];
+            for (var fieldAttr in errors) {
+                var errorMgs = errors[fieldAttr];
+                for (var msg in errorMgs) {
+                    //errorMessages.push({ field: fieldAttr, message: errorMgs[msg] });                       
+                    this.errorMessages.push(errorMgs[msg]);
+                }
+            }
+            //console.log("errors", this.errorMessages);
         },
         getData: function getData() {
             var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;

@@ -140,6 +140,9 @@ Vue.http.options.emulateHTTP = true;
             lastOpenModal: [],
             localModals: (typeof(modals) !== 'undefined' ? modals : {}),
             flashMessage: null,
+            defaultErrorMessage: 'Some errors in sended data, please check!.',
+            flashTypeDanger: 'danger',
+            errorMessages: '',
             flashType: null,
             url: apiUrl,
             row: objectRow,
@@ -362,6 +365,24 @@ Vue.http.options.emulateHTTP = true;
             },
             failed: function(response){
                 console.log(response);
+                this.flashMessage = this.defaultErrorMessage;
+                this.flashType = this.flashTypeDanger;
+                if (response.data) {
+                    vm.updateErrors(response.data);
+                    //console.log("errors", response.data);
+                }
+                //console.log("response", response.data);
+            },
+            updateErrors: function(errors) {
+                this.errorMessages = [];
+                for (var fieldAttr in errors) {
+                    var errorMgs = errors[fieldAttr];
+                    for (var msg in errorMgs) {
+                        //errorMessages.push({ field: fieldAttr, message: errorMgs[msg] });                       
+                        this.errorMessages.push(errorMgs[msg]);                       
+                    }
+                }
+                //console.log("errors", this.errorMessages);
             },
             getData: function(url = null){
                 if (!url) {
@@ -374,8 +395,8 @@ Vue.http.options.emulateHTTP = true;
             },
             cleanData: function() {
                 this.row = objectRow;
-                /*this.flashMessage = '';
-                this.flashType = '';*/
+                this.flashMessage = '';
+                this.flashType = '';
             },
             sendData: function(callUrl, method, data = {}) {
                 return this.$http({url: callUrl, method: method, data: data});
@@ -412,8 +433,9 @@ Vue.http.options.emulateHTTP = true;
                     this.localModals[modalName] = false;
                 else
                     this.$set(modalName, false);
+                
                 this.cleanData();  
-                console.log("Cerrado");
+                //console.log("Cerrado");
             },
             onFileChange: function(event){
                 var files = event.target.files || event.dataTransfer.files;
