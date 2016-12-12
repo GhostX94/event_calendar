@@ -23,7 +23,6 @@
 							<span class="sr-only">Error:</span>
 							Custom rule(maxlength) Message Here
 						</div>
-
 					</div>
 				</div>
 			</form>
