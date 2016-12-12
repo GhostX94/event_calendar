@@ -4,15 +4,15 @@
 {!! Html::style('css/vue-styles.css') !!}
 @endpush
 
-@section('title-content', 'List of schools')
+@section('title-content', 'Listing of schools')
 
 @section('content')
 <div id="app">
     <div class="row">
-        <h1 class="pull-left">Almacen</h1>
+        <h1 class="pull-left">List of schools</h1>
         <h1 class="pull-right">
             <a class="btn btn-primary pull-right" href="#" style="margin-top: -10px;margin-bottom: 5px"
-            @click="modal('POST')">Añadir nuevo</a>
+            @click="modal('POST')">Add new</a>
         </h1>
     </div>
     <!--Include table for items type schools-->
