@@ -13676,8 +13676,8 @@ window.vm = new Vue({
         },
         cleanData: function cleanData() {
             this.row = objectRow;
-            /*this.flashMessage = '';
-            this.flashType = '';*/
+            this.flashMessage = '';
+            this.flashType = '';
         },
         sendData: function sendData(callUrl, method) {
             var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -13709,8 +13709,9 @@ window.vm = new Vue({
             if (modalName == this.lastOpenModal[this.lastOpenModal.length - 1]) this.lastOpenModal.pop();
 
             if (this.localModals[modalName] != undefined) this.localModals[modalName] = false;else this.$set(modalName, false);
+
             this.cleanData();
-            console.log("Cerrado");
+            //console.log("Cerrado");
         },
         onFileChange: function onFileChange(event) {
             var files = event.target.files || event.dataTransfer.files;
