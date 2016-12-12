@@ -38,6 +38,6 @@ $factory->define(App\Calendar\EventType\EventType::class, function (Faker\Genera
     ];
     $i = $faker->unique()->numberBetween(0, 2);
     return[
-        'name' => $name[$i],
+        'name' => $names[$i],
     ];
 });
