@@ -28,3 +28,16 @@ $factory->define(App\Calendar\School\School::class, function (Faker\Generator $f
 		'name' => $faker->unique()->name,
 	];
 });
+
+$factory->define(App\Calendar\EventType\EventType::class, function (Faker\Generator $faker){
+
+    $names = [
+        'Informativo',
+        'Escolar',
+        'Caridad',
+    ];
+    $i = $faker->unique()->numberBetween(0, 2);
+    return[
+        'name' => $name[$i],
+    ];
+});
