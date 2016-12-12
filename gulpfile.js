@@ -37,6 +37,5 @@ elixir(mix => {
     mix.browserify('crud.js', 'public/js/crud.js');
 
    	mix.scripts(['models/school/config.js'], 'public/js/models/school/config.js')
-
-
+    mix.scripts(['models/eventType/config.js'], 'public/js/models/eventType/config.js')
 });
