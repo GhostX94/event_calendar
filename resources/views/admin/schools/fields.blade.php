@@ -6,7 +6,7 @@
 				<!-- Name Field -->
 				<div class="form-group">
 					<label for="name">Name:</label>
-					<input type="text" class="form-control" v-model="row.name" v-validate:name="{ required: true, minlength: 1, maxlength: 128{{-- , unique: providers --}} }" data-type="text" />
+					<input type="text" class="form-control" v-model="row.name" v-validate:name="{ required: true, minlength: 1, maxlength: 255}" data-type="text" />
 					<div v-if="$validation.name.invalid" class="alert alert-danger" role="alert">
 						<div v-if="$validation.name.required">
 							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
