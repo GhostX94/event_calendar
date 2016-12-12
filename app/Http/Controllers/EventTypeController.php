@@ -44,4 +44,19 @@ class EventTypeController extends Controller
 			return response()->json($result);
 		}	
 	}
+
+	public function store(CreateSchoolRequest $request)
+	{
+		if (request()->ajax()) 
+		{
+			$data = array();
+			$input = $request->all();
+			$school = $this->repository->create($input);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'Event type saved');
+			$this->addToResponseArray('data', $school->toArray());
+			$this->addToResponseArray('request', $input);
+			return $this->getResponseArrayJson();
+		}
+	}
 }
