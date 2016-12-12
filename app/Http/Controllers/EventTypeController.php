@@ -8,7 +8,7 @@ use App\Http\Requests;
 
 use App\Calendar\EventType\EventTypeRepository;
 use App\Calendar\EventType\EventType;
-
+use App\Http\Requests\CreateEventTypeRequest;
 
 class EventTypeController extends Controller
 {
@@ -45,7 +45,7 @@ class EventTypeController extends Controller
 		}	
 	}
 
-	public function store(CreateSchoolRequest $request)
+	public function store(CreateEventTypeRequest $request)
 	{
 		if (request()->ajax()) 
 		{
