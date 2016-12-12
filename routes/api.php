@@ -66,24 +66,24 @@ Route::group(['prefix' => 'admin'], function ()
 				'uses' => 'EventTypeController@index'
 		]);
 
+		Route::post('store', [
+			'as' => 'api.eventTypes.store',
+			'uses' => 'EventTypeController@store'
+		]);
+
 		/*Route::get('show/{id?}', [
 			'as' => 'api.eventTypes.show',
-			'uses' => 'SchoolController@show'
+			'uses' => 'EventTypeController@show'
 		]);
 
 		Route::patch('update/{id?}', [
 			'as' => 'api.eventTypes.update',
-			'uses' => 'SchoolController@update'
-		]);
-
-		Route::post('store', [
-			'as' => 'api.eventTypes.store',
-			'uses' => 'SchoolController@store'
+			'uses' => 'EventTypeController@update'
 		]);
 
 		Route::delete('delete/{id?}', [
 			'as' => 'api.eventTypes.destroy',
-			'uses' => 'SchoolController@destroy'
+			'uses' => 'EventTypeController@destroy'
 		]);*/
 	});
 
