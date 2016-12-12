@@ -59,4 +59,21 @@ class EventTypeController extends Controller
 			return $this->getResponseArrayJson();
 		}
 	}
+
+	public function show(Request $request, $id)
+	{
+		if (request()->ajax()) 
+		{
+			$eventType = $this->repository->get($id);
+			if (empty($eventType)) {
+				$this->addToResponseArray('message', 'Event Type not found');
+				return $this->getResponseArrayJson();
+			}
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'Event Type data retrieved correctly');
+			$this->addToResponseArray('data', $eventType->toArray());
+			return $this->getResponseArrayJson();
+		}
+	}
+
 }
