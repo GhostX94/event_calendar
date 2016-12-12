@@ -26,7 +26,7 @@
 @endsection
 
 @push('scripts-content')
-    {!! Html::script('js/models/school/config.js') !!}
+    {!! Html::script('js/models/eventTypes/config.js') !!}
     <script type="text/javascript">
         var token = '{{ csrf_token() }}';
         var fieldInitOrder = 'id';
@@ -40,8 +40,5 @@
     {!! Html::script('js/crud.js') !!}
     <script type="text/javascript">
         var vm = window.vm;
-        vm.$watch('formModal', function(value) {
-            console.log('formModal: ' + value);
-        });
     </script>
 @endpush
