@@ -16,7 +16,7 @@
         </h1>
     </div>
     <!--Include table for items type schools-->
-    @include('admin.schools.table')
+    @include('admin.eventTypes.table')
 
     <!--Modals-->
     @include('admin.schools.form')
@@ -26,7 +26,7 @@
 @endsection
 
 @push('scripts-content')
-    {!! Html::script('js/models/eventTypes/config.js') !!}
+    {!! Html::script('js/models/eventType/config.js') !!}
     <script type="text/javascript">
         var token = '{{ csrf_token() }}';
         var fieldInitOrder = 'id';
