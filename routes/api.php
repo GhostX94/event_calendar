@@ -76,12 +76,12 @@ Route::group(['prefix' => 'admin'], function ()
 			'uses' => 'EventTypeController@show'
 		]);
 
-		/*Route::patch('update/{id?}', [
+		Route::patch('update/{id?}', [
 			'as' => 'api.eventTypes.update',
 			'uses' => 'EventTypeController@update'
 		]);
 
-		Route::delete('delete/{id?}', [
+		/*Route::delete('delete/{id?}', [
 			'as' => 'api.eventTypes.destroy',
 			'uses' => 'EventTypeController@destroy'
 		]);*/
