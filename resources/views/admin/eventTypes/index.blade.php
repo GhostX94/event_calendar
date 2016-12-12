@@ -19,9 +19,9 @@
     @include('admin.eventTypes.table')
 
     <!--Modals-->
-    @include('admin.schools.form')
-    @include('admin.schools.show')
-    @include('admin.schools.delete')
+    @include('admin.eventTypes.form')
+    @include('admin.eventTypes.show')
+    @include('admin.eventTypes.delete')
 </div>
 @endsection
 
@@ -31,10 +31,10 @@
         var token = '{{ csrf_token() }}';
         var fieldInitOrder = 'id';
         var apiUrl = {
-            store: "{{ route('api.schools.store') }}/",
-            show: "{{ route('api.schools.show') }}/",
-            update: "{{ route('api.schools.update') }}/",
-            delete: "{{ route('api.schools.destroy') }}/"
+            store: "{{ route('api.eventTypes.store') }}/",
+            {{--show: "{{ route('api.eventTypes.show') }}/",
+            update: "{{ route('api.eventTypes.update') }}/",
+            delete: "{{ route('api.eventTypes.destroy') }}/"--}}
         };
     </script>
     {!! Html::script('js/crud.js') !!}
