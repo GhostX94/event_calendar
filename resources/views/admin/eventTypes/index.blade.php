@@ -34,7 +34,7 @@
             store: "{{ route('api.eventTypes.store') }}/",
             show: "{{ route('api.eventTypes.show') }}/",
             update: "{{ route('api.eventTypes.update') }}/",
-            {{--delete: "{{ route('api.eventTypes.destroy') }}/"--}}
+            delete: "{{ route('api.eventTypes.destroy') }}/"
         };
     </script>
     {!! Html::script('js/crud.js') !!}
