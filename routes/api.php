@@ -81,10 +81,10 @@ Route::group(['prefix' => 'admin'], function ()
 			'uses' => 'EventTypeController@update'
 		]);
 
-		/*Route::delete('delete/{id?}', [
+		Route::delete('delete/{id?}', [
 			'as' => 'api.eventTypes.destroy',
 			'uses' => 'EventTypeController@destroy'
-		]);*/
+		]);
 	});
 
 });
