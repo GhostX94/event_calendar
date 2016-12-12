@@ -32,8 +32,8 @@
         var fieldInitOrder = 'id';
         var apiUrl = {
             store: "{{ route('api.eventTypes.store') }}/",
-            {{--show: "{{ route('api.eventTypes.show') }}/",
-            update: "{{ route('api.eventTypes.update') }}/",
+            show: "{{ route('api.eventTypes.show') }}/",
+            {{--update: "{{ route('api.eventTypes.update') }}/",
             delete: "{{ route('api.eventTypes.destroy') }}/"--}}
         };
     </script>
