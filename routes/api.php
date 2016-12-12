@@ -63,7 +63,7 @@ Route::group(['prefix' => 'admin'], function ()
 	{
 		Route::get('/',[
 				'as' => 'api.eventTypes.index',
-				'uses' => 'SchoolController@index'
+				'uses' => 'EventTypeController@index'
 		]);
 
 		/*Route::get('show/{id?}', [
