@@ -15,7 +15,7 @@ class EventType extends Model
      *
      * @var string
     */
-	public $table = 'schools';
+	public $table = 'event_types';
 
 	/**
      * The attributes that are mass assignable.
