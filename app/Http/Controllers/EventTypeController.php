@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\Calendar\EventType\EventTypeRepository;
+use App\Calendar\EventType\EventType;
+
 
 class EventTypeController extends Controller
 {
@@ -24,12 +26,12 @@ class EventTypeController extends Controller
 			if (request()->has('sort')) 
 			{
 				list($sortCol, $sortDir) = explode('|', request()->sort);
-				if(\Schema::hasColumn('schools', $sortCol))
-					$query = School::orderBy($sortCol, $sortDir);
+				if(\Schema::hasColumn('event_types', $sortCol))
+					$query = EventType::orderBy($sortCol, $sortDir);
 				else
-					$query = School::sortBy($sortCol, $sortDir);
+					$query = EventType::sortBy($sortCol, $sortDir);
 			}else{
-				$query = School::orderBy('created_at', 'asc');
+				$query = EventType::orderBy('created_at', 'asc');
 			}
 
 			if ($request->exists('filter')) {
