@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admin'], function ()
 {	
 
 	/* 
-	 * ------------------- Route index for Schools ---------------
+	 * ------------------- Route for Schools ---------------
 	 */
 	Route::group(['prefix' => 'schools'], function()
 	{
@@ -53,13 +53,38 @@ Route::group(['prefix' => 'admin'], function ()
 			'as' => 'api.schools.destroy',
 			'uses' => 'SchoolController@destroy'
 		]);
+	});
 
-		Route::post('photos/{id?}', [
-			'as' => 'api.schools.store.photos',
-			'uses' => 'SchoolController@storePhoto'
+
+	/* 
+	 * ------------------- Route for EventTypes ---------------
+	 */
+	Route::group(['prefix' => 'eventTypes'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.eventTypes.index',
+				'uses' => 'SchoolController@index'
 		]);
 
+		/*Route::get('show/{id?}', [
+			'as' => 'api.eventTypes.show',
+			'uses' => 'SchoolController@show'
+		]);
 
+		Route::patch('update/{id?}', [
+			'as' => 'api.eventTypes.update',
+			'uses' => 'SchoolController@update'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.eventTypes.store',
+			'uses' => 'SchoolController@store'
+		]);
+
+		Route::delete('delete/{id?}', [
+			'as' => 'api.eventTypes.destroy',
+			'uses' => 'SchoolController@destroy'
+		]);*/
 	});
 
 });
