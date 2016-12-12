@@ -41,7 +41,7 @@
 
 <div class="table-responsive">
   <vuetable v-ref:vuetable
-  api-url="{{ route('api.schools.index') }}"
+  api-url="{{ route('api.eventTypes.index') }}"
   pagination-path=""
   :fields="columns"
   :sort-order="sortOrder"
