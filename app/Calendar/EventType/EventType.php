@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Calendar\School;
+namespace App\Calendar\EventType;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Calendar\SearchTrait;
