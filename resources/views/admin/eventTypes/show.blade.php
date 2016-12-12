@@ -1,5 +1,5 @@
 @extends('layouts.modal.show')
 
 @section('modal-show-title')
-Show School
+Show Event Type
 @stop							
