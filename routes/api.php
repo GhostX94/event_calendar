@@ -71,12 +71,12 @@ Route::group(['prefix' => 'admin'], function ()
 			'uses' => 'EventTypeController@store'
 		]);
 
-		/*Route::get('show/{id?}', [
+		Route::get('show/{id?}', [
 			'as' => 'api.eventTypes.show',
 			'uses' => 'EventTypeController@show'
 		]);
 
-		Route::patch('update/{id?}', [
+		/*Route::patch('update/{id?}', [
 			'as' => 'api.eventTypes.update',
 			'uses' => 'EventTypeController@update'
 		]);
