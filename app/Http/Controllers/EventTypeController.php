@@ -76,4 +76,17 @@ class EventTypeController extends Controller
 		}
 	}
 
+	public function update($id, Request $request)
+	{
+		if (request()->ajax()) 
+		{
+			$input = $request->all();
+			$eventType = $this->repository->update($input);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'Event Type update');
+			$this->addToResponseArray('data', $eventType->toArray());
+			return $this->getResponseArrayJson();
+		}
+	}
+
 }
