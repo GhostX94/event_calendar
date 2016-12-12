@@ -56,7 +56,6 @@ class SchoolController extends Controller
 			$input = $request->all();
 			$school = $this->repository->create($input);
 			$data['school_id'] = $school->id;
-			$data['user_id'] = 1;
 			if ($request->hasFile('image')) {
 				$this->schoolPhotoRepository->registerImage($request->file('image'), 
 					'storage/schools/', 
@@ -96,7 +95,6 @@ class SchoolController extends Controller
 			$input = $request->all();
 			$school = $this->repository->update($input);
 			$data['school_id'] = $school->id;
-			$data['user_id'] = 1;
 			if($request->hasFile('image'))
 			{
 				if ($school->hasPhotos()) 
