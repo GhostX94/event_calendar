@@ -48,6 +48,19 @@ Route::group(['prefix' => 'admin'], function () {
 		]);
 	});
 
+	/* 
+	 * ------------------- Route for EvenTypes ---------------
+	 */
+	Route::group(['prefix' => 'schoolLevels'], function(){
+
+		Route::get('',[
+				'as' => 'schoolLevels.index',
+				'uses' => function(){
+					return view('admin.schoolLevel.index');
+				}
+		]);
+	});
+
 
 
 });
