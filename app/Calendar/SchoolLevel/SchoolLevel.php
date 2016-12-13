@@ -32,5 +32,14 @@ class SchoolLevel extends Model
 	protected $searchableColumns = [
 		'name'
 	];
+
+    /**
+     * Get the schools.
+    */
+    public function schools()
+    {
+        return $this->hasMany('App\Calendar\School\School', 'school_level_id');
+    }
+
 	
 }
