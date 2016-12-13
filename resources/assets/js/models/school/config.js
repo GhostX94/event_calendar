@@ -2,6 +2,7 @@
 var objectRow = {            
     id: "",
     name: "",
+    school_level_id: "",
     image: "",
     created_at: "",
     updated_at: "",
@@ -17,6 +18,12 @@ var tableColumns = [
     {
         name: 'name',
         sortField: 'name',
+    },
+    {
+        name: 'school_level_name',
+        sortField: 'unit.name',
+        title: 'School level',
+        visible: true
     },
     {
         name: 'created_at',
