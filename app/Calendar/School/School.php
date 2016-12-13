@@ -22,7 +22,7 @@ class School extends Model
      *
      * @var array
     */
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'school_level_id'];
 
 	/**
      * 	The columns used for searches in each query.
@@ -40,6 +40,15 @@ class School extends Model
 	{
 		return $this->hasMany('App\Calendar\SchoolPhoto\SchoolPhoto', 'school_id');
 	}
+
+	/**
+	 * Get the school level for school.
+	*/
+	public function schoolLevel()
+	{
+		return $this->belongsTo('App\Calendar\SchoolLevel\SchoolLevel', 'school_level_id');
+	}
+
 
 	/**
 	 *  Check if there are photos associated with the model.
