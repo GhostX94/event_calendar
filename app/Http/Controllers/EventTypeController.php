@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Calendar\EventType\EventTypeRepository;
 use App\Calendar\EventType\EventType;
 use App\Http\Requests\CreateEventTypeRequest;
+use App\Http\Requests\EditEvenTypeRequest;
 
 class EventTypeController extends Controller
 {
@@ -76,7 +77,7 @@ class EventTypeController extends Controller
 		}
 	}
 
-	public function update($id, Request $request)
+	public function update($id, EditEvenTypeRequest $request)
 	{
 		if (request()->ajax()) 
 		{
