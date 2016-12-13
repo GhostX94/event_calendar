@@ -87,4 +87,36 @@ Route::group(['prefix' => 'admin'], function ()
 		]);
 	});
 
+	/* 
+	 * ------------------- Route for EventTypes ---------------
+	 */
+	Route::group(['prefix' => 'schoolLevels'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.schoolLevels.index',
+				'uses' => 'SchoolLevelController@index'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.schoolLevels.store',
+			'uses' => 'SchoolLevelController@store'
+		]);
+
+		Route::get('show/{id?}', [
+			'as' => 'api.schoolLevels.show',
+			'uses' => 'SchoolLevelController@show'
+		]);
+
+		Route::patch('update/{id?}', [
+			'as' => 'api.schoolLevels.update',
+			'uses' => 'SchoolLevelController@update'
+		]);
+
+		Route::delete('delete/{id?}', [
+			'as' => 'api.schoolLevels.destroy',
+			'uses' => 'SchoolLevelController@destroy'
+		]);
+	});
+
+
 });
