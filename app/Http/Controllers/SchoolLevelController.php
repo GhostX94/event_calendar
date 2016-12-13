@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use App\Calendar\SchoolLevel\SchoolLevel;
 use App\Calendar\SchoolLevel\SchoolLevelRepository;
+use App\Http\Requests\CreateSchoolLevelRequest;
 
 class SchoolLevelController extends Controller
 {
@@ -44,7 +45,7 @@ class SchoolLevelController extends Controller
 		}	
 	}
 
-	public function store(CreateSchoolRequest $request)
+	public function store(CreateSchoolLevelRequest $request)
 	{
 		if (request()->ajax()) 
 		{
@@ -52,7 +53,7 @@ class SchoolLevelController extends Controller
 			$input = $request->all();
 			$schoolLevel = $this->repository->create($input);
 			$this->setSuccess(true);
-			$this->addToResponseArray('message', 'School saved');
+			$this->addToResponseArray('message', 'School Level saved');
 			$this->addToResponseArray('data', $schoolLevel->toArray());
 			$this->addToResponseArray('request', $input);
 			return $this->getResponseArrayJson();
