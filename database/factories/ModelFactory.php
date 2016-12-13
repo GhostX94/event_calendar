@@ -24,8 +24,10 @@ $factory->define(App\Calendar\User\User::class, function (Faker\Generator $faker
 
 
 $factory->define(App\Calendar\School\School::class, function (Faker\Generator $faker){
-	return[
+	$schoolLevelId = $faker->numberBetween(1, 3);
+    return[
 		'name' => $faker->unique()->name,
+        'school_level_id' => $schoolLevelId 
 	];
 });
 
@@ -36,7 +38,7 @@ $factory->define(App\Calendar\EventType\EventType::class, function (Faker\Genera
         'Escolar',
         'Caridad',
     ];
-    $i = $faker->unique()->numberBetween(0, 2);
+    $i = $faker->numberBetween(0, 2);
     return[
         'name' => $names[$i],
     ];
@@ -49,7 +51,7 @@ $factory->define(App\Calendar\SchoolLevel\SchoolLevel::class, function (Faker\Ge
         'Secundaria',
         'Preparatoria',
     ];
-    $i = $faker->unique()->numberBetween(0, 2);
+    $i = $faker->numberBetween(0, 2);
     return[
         'name' => $names[$i],
     ];
