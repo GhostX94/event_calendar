@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Calendar\SchoolLevel\SchoolLevel;
 use App\Calendar\SchoolLevel\SchoolLevelRepository;
 use App\Http\Requests\CreateSchoolLevelRequest;
-
+use App\Http\Requests\EditSchoolLevelRequest;
 class SchoolLevelController extends Controller
 {
 	private $repository;
@@ -75,4 +75,18 @@ class SchoolLevelController extends Controller
 			return $this->getResponseArrayJson();
 		}
 	}
+
+	public function update($id, EditSchoolLevelRequest $request)
+	{
+		if (request()->ajax()) 
+		{
+			$input = $request->all();
+			$schoolLevel = $this->repository->update($input);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'School Level update');
+			$this->addToResponseArray('data', $schoolLevel->toArray());
+			return $this->getResponseArrayJson();
+		}
+	}
+
 }
