@@ -10,6 +10,7 @@ use App\Calendar\School\SchoolRepository;
 use App\Calendar\School\School;
 use App\Calendar\SchoolPhoto\SchoolPhotoRepository;
 use App\Http\Requests\CreateSchoolRequest;
+use App\Http\Requests\EditSchoolRequest;
 
 class SchoolController extends Controller
 {
@@ -88,7 +89,7 @@ class SchoolController extends Controller
 		}
 	}
 
-	public function update($id, Request $request)
+	public function update($id, CreateSchoolRequest $request)
 	{
 		if (request()->ajax()) 
 		{
