@@ -44,4 +44,18 @@ class SchoolLevelController extends Controller
 		}	
 	}
 
+	public function store(CreateSchoolRequest $request)
+	{
+		if (request()->ajax()) 
+		{
+			$data = array();
+			$input = $request->all();
+			$schoolLevel = $this->repository->create($input);
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'School saved');
+			$this->addToResponseArray('data', $schoolLevel->toArray());
+			$this->addToResponseArray('request', $input);
+			return $this->getResponseArrayJson();
+		}
+	}
 }
