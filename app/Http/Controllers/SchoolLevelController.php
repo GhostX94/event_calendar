@@ -59,4 +59,20 @@ class SchoolLevelController extends Controller
 			return $this->getResponseArrayJson();
 		}
 	}
+
+	public function show(Request $request, $id)
+	{
+		if (request()->ajax()) 
+		{
+			$schoolLevel = $this->repository->get($id);
+			if (empty($schoolLevel)) {
+				$this->addToResponseArray('message', 'School Level not found');
+				return $this->getResponseArrayJson();
+			}
+			$this->setSuccess(true);
+			$this->addToResponseArray('message', 'School Level data retrieved correctly');
+			$this->addToResponseArray('data', $schoolLevel->toArray());
+			return $this->getResponseArrayJson();
+		}
+	}
 }
