@@ -34,6 +34,13 @@ class School extends Model
 	];
 
 	/**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['school_level_name'];
+
+	/**
 	 * Get the picture for school.
 	*/
 	public function photos()
@@ -70,6 +77,17 @@ class School extends Model
             }
         }
         return false;
+    }
+
+    /**
+     * Return the school level name for the school.
+     */
+
+    public function getSchoolLevelNameAttribute()
+    {
+    	if ($this->schoolLevel)
+    		return $this->schoolLevel->name;
+    	return false;
     }
 
 }
