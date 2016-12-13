@@ -89,4 +89,15 @@ class SchoolLevelController extends Controller
 		}
 	}
 
+	public function destroy($id, Request $request)
+	{
+		if (request()->ajax()) 
+		{
+			$input = $request->all();
+			$this->setSuccess($this->repository->delete($id));
+			$this->addToResponseArray('message', 'School Level delete');
+			return $this->getResponseArrayJson(); 
+		}
+	}
+
 }
