@@ -41,8 +41,6 @@ class CreateSchoolsPhotos extends Migration
         Schema::table('schools_photos', function (Blueprint $table) {
             $table->dropForeign('schools_photos_school_id_foreign');
             $table->dropColumn('school_id');
-            $table->dropForeign('schools_photos_user_id_foreign');
-            $table->dropColumn('user_id');
         });
         Schema::dropIfExists('schools_photos');
     }
