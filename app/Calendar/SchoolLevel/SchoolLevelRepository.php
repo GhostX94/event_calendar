@@ -7,7 +7,7 @@
 	/**
 	* 
 	*/
-	class SchoolRepository extends BaseRepository
+	class SchoolLevelRepository extends BaseRepository
 	{
 		
 		public function __construct()
