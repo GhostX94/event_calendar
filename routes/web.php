@@ -56,7 +56,7 @@ Route::group(['prefix' => 'admin'], function () {
 		Route::get('',[
 				'as' => 'schoolLevels.index',
 				'uses' => function(){
-					return view('admin.schoolLevel.index');
+					return view('admin.schoolLevels.index');
 				}
 		]);
 	});
