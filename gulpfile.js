@@ -38,4 +38,6 @@ elixir(mix => {
 
    	mix.scripts(['models/school/config.js'], 'public/js/models/school/config.js')
     mix.scripts(['models/eventType/config.js'], 'public/js/models/eventType/config.js')
+    mix.scripts(['models/schoolLevel/config.js'], 'public/js/models/schoolLevel/config.js')
+
 });
