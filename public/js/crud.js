@@ -13464,6 +13464,7 @@ window.vm = new Vue({
         flashType: null,
         url: apiUrl,
         row: objectRow,
+        foreignData: new Array(),
         searchFor: '',
         columns: tableColumns,
         sortOrder: [{
@@ -13674,6 +13675,28 @@ window.vm = new Vue({
                 this.sendData(url, 'GET').then(this.success2, this.failed);
             }
         },
+        getForeignData: function getForeignData() {
+            var callUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+            var mapVar = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+            var related = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+            var action = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'index';
+
+            var foreign = this.url.foreign[related][action];
+            if (callUrl == null) callUrl = foreign.url;
+
+            var sendParams = { url: callUrl, method: foreign.method, data: {} };
+            this.$http(sendParams).then(function (response) {
+                if (response.data.data) {
+                    var data = response.data.data;
+                    var currentForeignData = vm.foreignData;
+                    currentForeignData[mapVar] = data;
+                    var count = data.length;
+                    if (count === undefined) count = Object.keys(data).length;
+                    currentForeignData[mapVar + 'Count'] = count;
+                    vm.foreignData.push(currentForeignData);
+                }
+            });
+        },
         cleanData: function cleanData() {
             this.row = objectRow;
             this.flashMessage = '';
@@ -13703,6 +13726,9 @@ window.vm = new Vue({
                 this.lastOpenModal.push('deleteModal');
                 this.method = type;
                 this.deleteModal = true;
+            } else {
+                this.lastOpenModal.push(type);
+                this.localModals[type] = true;
             }
         },
         closeModal: function closeModal(modalName) {
