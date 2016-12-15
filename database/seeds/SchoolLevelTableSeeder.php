@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Calendar\SchoolLevel\SchoolLevel;
 
 class SchoolLevelTableSeeder extends Seeder
 {
@@ -11,6 +12,16 @@ class SchoolLevelTableSeeder extends Seeder
      */
     public function run()
     {
-   		factory(App\Calendar\SchoolLevel\SchoolLevel::class, 3)->create();
+    	$names = [
+        	'Primaria',
+        	'Secundaria',
+        	'Preparatoria',
+    	];	
+
+    	for ($i=0; $i < count($names); $i++) { 
+    		SchoolLevel::create(['name' => $names[$i]]);
+    	}
+
+   		//factory(App\Calendar\SchoolLevel\SchoolLevel::class, 3)->create();
     }
 }
