@@ -6,6 +6,10 @@ var objectRow = {
     image: "",
     created_at: "",
     updated_at: "",
+    school_level: {
+        id: "",
+        name: ""
+    }
 };
 
 var tableColumns = [
@@ -48,3 +52,7 @@ var actions = [
         { name: 'edit-item', label: '', icon: 'glyphicon glyphicon-pencil', class: 'btn btn-warning', extra: {title: 'Edit', 'data-toggle':"tooltip", 'data-placement': "top"} },
         { name: 'delete-item', label: '', icon: 'glyphicon glyphicon-remove', class: 'btn btn-danger', extra: {title: 'Delete', 'data-toggle':"tooltip", 'data-placement': "right" } }
 ];
+
+var modals = {
+    school_level_ADD_inform: false,
+};
