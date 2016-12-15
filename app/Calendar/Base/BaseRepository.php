@@ -33,9 +33,9 @@
 			return $this->getModel()->all();
 		}
 
-		public function getAllForSelect()
+		public function getSelectList()
 		{
-			return $this->getAll()->lists('name', 'id');
+			return $this->getAll()->pluck('name', 'id');
 		}
 
 		public function get($id)
