@@ -146,6 +146,7 @@ Vue.http.options.emulateHTTP = true;
             flashType: null,
             url: apiUrl,
             row: objectRow,
+            foreignData: new Array(),
             searchFor: '',
             columns: tableColumns,
             sortOrder: [{
@@ -393,6 +394,26 @@ Vue.http.options.emulateHTTP = true;
                     .then(this.success2, this.failed);    
                 }
             },
+            getForeignData: function(callUrl = null, mapVar = null, related = null, action = 'index'){
+                var foreign = this.url.foreign[related][action];
+                if(callUrl == null)
+                    callUrl = foreign.url;
+
+                var sendParams = {url: callUrl, method: foreign.method, data:{}};
+                this.$http(sendParams)
+                    .then(function(response){
+                        if(response.data.data){
+                            var data = response.data.data;
+                            var currentForeignData = vm.foreignData;
+                            currentForeignData[mapVar] = data;
+                            var count = data.length;
+                            if(count === undefined)
+                                count = Object.keys(data).length;
+                            currentForeignData[mapVar + 'Count'] = count;
+                            vm.foreignData.push(currentForeignData);
+                        }
+                    });
+            },
             cleanData: function() {
                 this.row = objectRow;
                 this.flashMessage = '';
@@ -423,7 +444,11 @@ Vue.http.options.emulateHTTP = true;
                     this.lastOpenModal.push('deleteModal');
                     this.method = type;
                     this.deleteModal = true;
+                }else{
+                    this.lastOpenModal.push(type);
+                    this.localModals[type] = true;
                 }
+
             },
             closeModal: function(modalName){
                 if (modalName == this.lastOpenModal[this.lastOpenModal.length - 1])
