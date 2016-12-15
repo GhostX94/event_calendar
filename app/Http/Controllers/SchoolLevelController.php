@@ -10,8 +10,12 @@ use App\Calendar\SchoolLevel\SchoolLevel;
 use App\Calendar\SchoolLevel\SchoolLevelRepository;
 use App\Http\Requests\CreateSchoolLevelRequest;
 use App\Http\Requests\EditSchoolLevelRequest;
+use App\Http\Controllers\DataFormat;
+
 class SchoolLevelController extends Controller
 {
+	use DataFormat;  
+
 	private $repository;
 
     public function __construct(SchoolLevelRepository $schoolLevelRepository)
