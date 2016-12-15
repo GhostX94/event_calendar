@@ -116,7 +116,11 @@ Route::group(['prefix' => 'admin'], function ()
 			'as' => 'api.schoolLevels.destroy',
 			'uses' => 'SchoolLevelController@destroy'
 		]);
-	});
 
+		Route::get('select-list', [
+			'as' => 'api.schoolLevels.select-list',
+			'uses' => 'SchoolLevelController@selectList'
+		]);
+	});
 
 });
