@@ -54,5 +54,5 @@ var actions = [
 ];
 
 var modals = {
-    school_level_ADD_inform: false,
+    schoolLevel_ADD_inform: false,
 };
