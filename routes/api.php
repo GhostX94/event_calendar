@@ -88,7 +88,7 @@ Route::group(['prefix' => 'admin'], function ()
 	});
 
 	/* 
-	 * ------------------- Route for EventTypes ---------------
+	 * ------------------- Route for SchoolLevels ---------------
 	 */
 	Route::group(['prefix' => 'schoolLevels'], function()
 	{
