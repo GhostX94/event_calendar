@@ -36,7 +36,7 @@
 							</option>
 						</select>
 						<span class="input-group-btn">
-	    					<button class="btn btn-primary" @click="modal('school_level_ADD_inform')">
+	    					<button class="btn btn-primary" @click="modal('schoolLevel_ADD_inform')">
 	    						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     						</button>
 	  					</span>
