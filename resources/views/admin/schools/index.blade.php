@@ -45,6 +45,10 @@
                     select:{
                         method: 'GET',
                         url: "{{ route('api.schoolLevels.select-list') }}/",
+                    },
+                    store:{
+                        method: 'POST',
+                        url: "{{ route('api.schoolLevels.store') }}/"
                     } 
                 }
             }
@@ -56,6 +60,23 @@
         var loadSchoolLevels = function() {
             vm.getForeignData(vm.url.foreign.school_level.select.url, 'schoolLevelOptions', 'school_level', 'select');
         }
-        loadSchoolLevels();
+
+        vm.$watch('formModal', function (value) {
+            if (value) {
+                loadSchoolLevels();
+            }
+        })
+
+        /**
+        * Load school levels list after add new school level from add new school form
+        */
+        vm.$watch('localModals.schoolLevel_ADD_inform', function (value) {
+            if ( !value ) {
+                loadSchoolLevels();
+            }
+        });
+          
+
+
     </script>
 @endpush
