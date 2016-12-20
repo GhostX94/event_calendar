@@ -1,8 +1,8 @@
 <?php
 	extract([
             'modalTitle'    => 'New level',
-            'modalSync'     => 'school_level_ADD_inform',
-            'modalClose'    => 'school_level_ADD_inform',
+            'modalSync'     => 'schoolLevel_ADD_inform',
+            'modalClose'    => 'schoolLevel_ADD_inform',
             'model'         => 'School_level',
             'type'			=> 'store',
             'content'       => view('admin.schools.schoolLevel.fields')
