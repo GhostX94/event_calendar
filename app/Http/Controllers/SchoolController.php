@@ -24,30 +24,26 @@ class SchoolController extends Controller
 	}
 
 	public function index(Request $request)
-	{
-		if (request()->ajax()) 
-		{
-			if (request()->has('sort')) 
-			{
-				list($sortCol, $sortDir) = explode('|', request()->sort);
-				if(\Schema::hasColumn('schools', $sortCol))
-					$query = School::orderBy($sortCol, $sortDir);
-				else
-					$query = School::sortBy($sortCol, $sortDir);
-			}else{
-				$query = School::orderBy('created_at', 'asc');
-			}
+    {
+        if (request()->has('sort')) {
+            list($sortCol, $sortDir) = explode('|', request()->sort);
+            if ( \Schema::hasColumn('items', $sortCol) ) 
+              $query = School::orderBy($sortCol, $sortDir);
+            else
+              $query = School::sortBy($sortCol, $sortDir);
+        } else {
+            $query = School::orderBy('created_at', 'asc');
+        }
 
-			if ($request->exists('filter')) {
-				$query->search("{$request->filter}");
-			}
+        if ($request->exists('filter')) {
+          $query->search("{$request->filter}");                     
+        }
 
-			$perPage = request()->has('per_page') ? (int) request()->per_page : null;
-			$result = $query->paginate($perPage);
+        $perPage = request()->has('per_page') ? (int) request()->per_page : null;
+        $result = $query->paginate($perPage);
 
-			return response()->json($result);
-		}	
-	}
+        return response()->json($result);
+    }
 
 	public function store(CreateSchoolRequest $request)
 	{
