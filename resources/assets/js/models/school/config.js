@@ -25,7 +25,7 @@ var tableColumns = [
     },
     {
         name: 'school_level_name',
-        sortField: 'unit.name',
+        sortField: 'school_level.name',
         title: 'School level',
         visible: true
     },
