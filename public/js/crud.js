@@ -13646,7 +13646,8 @@ window.vm = new Vue({
             }
         },
         success: function success(response) {
-            var lastOpenModal = this.lastOpenModal.pop();
+            var lastOpenModal = vm.lastOpenModal.pop();
+            console.log(lastOpenModal);
             if (response.data.data) {
                 var data = response.data.data;
                 var actions = lastOpenModal.split('_');
@@ -13656,15 +13657,13 @@ window.vm = new Vue({
                     var field = decamelize(actions[0]);
                     this.row[field + '_id'] = data.id;
                 }
-                console.log(map);
-                //vm.$set(map, data);
+                vm.$set(map, data);
+                console.log(JSON.stringify(this.row));
             }
             if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE') this.$broadcast('vuetable:reload');
             var message = response.data.message;
             vm.flashMessage = message;
             vm.flashType = 'success';
-            this.closeModal(lastOpenModal);
-            console.log(response);
         },
         success2: function success2(response) {
             var lastOpenModal = this.lastOpenModal.pop();
@@ -13673,18 +13672,15 @@ window.vm = new Vue({
                 var data = response.data.data;
                 var actions = lastOpenModal.split('_');
                 if (actions.length && actions[2] == 'inform') {
-                    map += '.' + decamelize(actions[0]);
+                    map += '.' + actions[0];
                     var field = decamelize(actions[0]);
                     this.row[field + '_id'] = data.id;
-                    console.log(field, this.row[field + '_id']);
                 }
                 if (response.data.imageUrl) {
                     this.file = '/' + response.data.imageUrl;
                 }
 
                 this.$set(map, data);
-                console.log(map);
-
                 //console.log("success2");
                 //console.log(JSON.stringify(response.data));
             }
@@ -13705,14 +13701,14 @@ window.vm = new Vue({
         },
         updateErrors: function updateErrors(errors) {
             this.errorMessages = [];
-            for (var fieldAttr in errors) {
+            /*for (var fieldAttr in errors) {
                 var errorMgs = errors[fieldAttr];
                 for (var msg in errorMgs) {
                     //errorMessages.push({ field: fieldAttr, message: errorMgs[msg] });                       
-                    this.errorMessages.push(errorMgs[msg]);
+                    this.errorMessages.push(errorMgs[msg]);                       
                 }
             }
-            //console.log("errors", this.errorMessages);
+            //console.log("errors", this.errorMessages);*/
         },
         getData: function getData() {
             var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -13762,21 +13758,30 @@ window.vm = new Vue({
             return false;
         },
         modal: function modal(type) {
+            var number = vm.lastOpenModal.length - 1;
+            var index = number >= 0 ? number : 0;
+            console.log(index);
+
             if (type == 'PATCH' || type == 'POST') {
-                this.lastOpenModal.push('formModal');
-                this.method = type;
-                this.formModal = true;
+                vm.lastOpenModal.push('formModal');
+                //vm.lastOpenModal.$set(index, 'formModal');
+                vm.method = type;
+                vm.formModal = true;
             } else if (type == 'SHOW') {
-                this.lastOpenModal.push('showModal');
-                this.method = type;
-                this.showModal = true;
+                vm.lastOpenModal.push('showModal');
+                vm.method = type;
+                vm.showModal = true;
             } else if (type == 'DELETE') {
-                this.lastOpenModal.push('deleteModal');
-                this.method = type;
-                this.deleteModal = true;
+                //vm.lastOpenModal.push('deleteModal');
+                vm.lastOpenModal.$set(index, 'deleteModal');
+                vm.method = type;
+                vm.deleteModal = true;
+            } else if (type == 'INFO') {
+                vm.lastOpenModal.push('infoModal');
+                vm.infoModal = true;
             } else {
-                this.lastOpenModal.push(type);
-                this.localModals[type] = true;
+                vm.lastOpenModal.push(type);
+                vm.localModals[type] = true;
             }
         },
         closeModal: function closeModal(modalName) {
@@ -13831,10 +13836,13 @@ window.vm = new Vue({
             this.getData();
             if (action == 'view-item') {
                 this.modal('SHOW');
+                this.lastOpenModal.push('showModal');
             } else if (action == 'edit-item') {
                 this.modal('PATCH');
+                this.lastOpenModal.push('formModal');
             } else if (action == 'delete-item') {
                 this.modal('DELETE');
+                this.lastOpenModal.push('deleteModal');
             }
         },
         'vuetable:load-success': function vuetableLoadSuccess(response) {
