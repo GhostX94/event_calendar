@@ -3,6 +3,7 @@
 namespace App\Calendar\School;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Calendar\SchoolLevel\SchoolLevel;
 use App\Calendar\SearchTrait;
 use App\Calendar\SortTrait;
 
@@ -30,7 +31,11 @@ class School extends Model
      * @var array
     */
 	protected $searchableColumns = [
-		'name'
+		'name',
+		'schoolLevel' => [
+            'table' => 'school_levels',
+            'name'
+        ],
 	];
 
 	/**
@@ -53,7 +58,7 @@ class School extends Model
 	*/
 	public function schoolLevel()
 	{
-		return $this->belongsTo('App\Calendar\SchoolLevel\SchoolLevel', 'school_level_id');
+		return $this->belongsTo(SchoolLevel::class, 'school_level_id');
 	}
 
 
