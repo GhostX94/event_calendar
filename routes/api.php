@@ -123,4 +123,35 @@ Route::group(['prefix' => 'admin'], function ()
 		]);
 	});
 
+	/* 
+	 * ------------------- Route for EventTargets ---------------
+	 */
+	Route::group(['prefix' => 'EventTargets'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.eventTargets.index',
+				'uses' => 'EventTargetController@index'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.eventTargets.store',
+			'uses' => 'EventTargetController@store'
+		]);
+
+		Route::get('show/{id?}', [
+			'as' => 'api.eventTargets.show',
+			'uses' => 'EventTargetController@show'
+		]);
+
+		Route::patch('update/{id?}', [
+			'as' => 'api.eventTargets.update',
+			'uses' => 'EventTargetController@update'
+		]);
+
+		Route::delete('delete/{id?}', [
+			'as' => 'api.eventTargets.destroy',
+			'uses' => 'EventTargetController@destroy'
+		]);
+	});
+
 });

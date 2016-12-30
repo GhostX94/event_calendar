@@ -62,6 +62,19 @@ Route::group(['prefix' => 'admin'], function () {
 	});
 
 
+	/* 
+	 * ------------------- Route for EvenTargets ---------------
+	 */
+	Route::group(['prefix' => 'eventTargets'], function(){
+
+		Route::get('',[
+				'as' => 'eventTargets.index',
+				'uses' => function(){
+					return view('admin.eventTargets.index');
+				}
+		]);
+	});
+
 
 });
 
