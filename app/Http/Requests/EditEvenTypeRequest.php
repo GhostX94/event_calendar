@@ -33,7 +33,7 @@ class EditEvenTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:1|max:255|unique:event_types,name,'.$this->route->getParameter('id')
+            'name' => 'required|min:1|max:255|unique:event_types,name,'.$this->route->getParameter('id'),
         ];
     }
 }
