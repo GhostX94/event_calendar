@@ -400,15 +400,14 @@ Vue.http.options.emulateHTTP = true;
                 console.log(response);
                 this.flashMessage = this.defaultErrorMessage;
                 this.flashType = this.flashTypeDanger;
-                if (response.data) {
-                    vm.updateErrors(response.data);
+                if (response.body) {
+                    vm.updateErrors(response.body);
                     //console.log("errors", response.data);
                 }
-                //console.log("response", response.data);
             },
             updateErrors: function(errors) {
                 this.errorMessages = [];
-                /*for (var fieldAttr in errors) {
+                for (var fieldAttr in errors) {
                     var errorMgs = errors[fieldAttr];
                     for (var msg in errorMgs) {
                         //errorMessages.push({ field: fieldAttr, message: errorMgs[msg] });                       
@@ -470,7 +469,6 @@ Vue.http.options.emulateHTTP = true;
 
                 if (type == 'PATCH' || type == 'POST') {
                     vm.lastOpenModal.push('formModal');
-                    //vm.lastOpenModal.$set(index, 'formModal');
                     vm.method = type;
                     vm.formModal = true;
                 } else if (type == 'SHOW') {
@@ -478,8 +476,7 @@ Vue.http.options.emulateHTTP = true;
                     vm.method = type;
                     vm.showModal = true;
                 } else if (type == 'DELETE') {
-                    //vm.lastOpenModal.push('deleteModal');
-                    vm.lastOpenModal.$set(index, 'deleteModal');
+                    vm.lastOpenModal.push('deleteModal');
                     vm.method = type;
                     vm.deleteModal = true;
                 } else if (type == 'INFO') {
@@ -544,13 +541,13 @@ Vue.http.options.emulateHTTP = true;
                 this.getData();
                 if (action == 'view-item') {
                     this.modal('SHOW');
-                    this.lastOpenModal.push('showModal');
+                    //this.lastOpenModal.push('showModal');
                 } else if (action == 'edit-item') {
                     this.modal('PATCH');
-                    this.lastOpenModal.push('formModal');
+                    //this.lastOpenModal.push('formModal');
                 } else if (action == 'delete-item') {
                     this.modal('DELETE');
-                    this.lastOpenModal.push('deleteModal');
+                    //this.lastOpenModal.push('deleteModal');
                 }
             },
             'vuetable:load-success': function(response) {
