@@ -11,17 +11,32 @@
 |
 */
 
+Auth::routes();
+// Authentication Routes...
+/*Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');*/
+//Route::get('/home', 'HomeController@index');
+
+
 Route::get('/', function () {
     return view('fullcalendar');
 });
 
 
-Route::group(['prefix' => 'admin'], function () {	
-
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], 
+	function (){
 	Route::get('/dashboard', function () {
-    	return view('admin.content');
+	    	return view('admin.content');
 	});
+}); 
 
+
+
+
+Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () {	
+
+	
 	/* 
 	 * ------------------- Route for Schools ---------------
 	 */
@@ -77,6 +92,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 });
+
 
 
 
