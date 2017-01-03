@@ -19,6 +19,7 @@ class UserTableSeeder extends Seeder
 	        'name' => 'ajpadilla88',
 	        'email' => 'ajpadilla88@gmail.com',
 	        'password' => bcrypt('secret'),
+            'active' => 1,
 	        'remember_token' => str_random(10),
     	];
 
@@ -26,6 +27,7 @@ class UserTableSeeder extends Seeder
 	        'name' => 'tego_07_07',
 	        'email' => 'tego_07_07@hotmail.com',
 	        'password' => bcrypt('secret'),
+            'active' => 1,
 	        'remember_token' => str_random(10),
     	];
 
