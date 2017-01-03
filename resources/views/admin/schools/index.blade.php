@@ -18,10 +18,15 @@
     <!--Include table for items type schools-->
     @include('admin.schools.table')
 
-    <!--Modals-->
+    {{--Modals--}}
     @include('admin.schools.form')
     @include('admin.schools.show')
     @include('admin.schools.delete')
+
+    {{-- Modals relations --}}
+    @include('admin.schools.schoolLevel.add')
+
+
 </div>
 @endsection
 
@@ -34,14 +39,44 @@
             store: "{{ route('api.schools.store') }}/",
             show: "{{ route('api.schools.show') }}/",
             update: "{{ route('api.schools.update') }}/",
-            delete: "{{ route('api.schools.destroy') }}/"
+            delete: "{{ route('api.schools.destroy') }}/",
+            foreign :{
+                school_level:{
+                    select:{
+                        method: 'GET',
+                        url: "{{ route('api.schoolLevels.select-list') }}/",
+                    },
+                    store:{
+                        method: 'POST',
+                        url: "{{ route('api.schoolLevels.store') }}/"
+                    } 
+                }
+            }
         };
     </script>
     {!! Html::script('js/crud.js') !!}
     <script type="text/javascript">
         var vm = window.vm;
-        vm.$watch('formModal', function(value) {
-            console.log('formModal: ' + value);
+        var loadSchoolLevels = function() {
+            vm.getForeignData(vm.url.foreign.school_level.select.url, 'schoolLevelOptions', 'school_level', 'select');
+        }
+
+        vm.$watch('formModal', function (value) {
+            if (value) {
+                loadSchoolLevels();
+            }
+        })
+
+        /**
+        * Load school levels list after add new school level from add new school form
+        */
+        vm.$watch('localModals.schoolLevel_ADD_inform', function (value) {
+            if ( !value ) {
+                loadSchoolLevels();
+            }
         });
+          
+
+
     </script>
 @endpush

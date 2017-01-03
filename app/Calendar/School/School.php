@@ -3,6 +3,7 @@
 namespace App\Calendar\School;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Calendar\SchoolLevel\SchoolLevel;
 use App\Calendar\SearchTrait;
 use App\Calendar\SortTrait;
 
@@ -22,7 +23,7 @@ class School extends Model
      *
      * @var array
     */
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'school_level_id'];
 
 	/**
      * 	The columns used for searches in each query.
@@ -30,8 +31,19 @@ class School extends Model
      * @var array
     */
 	protected $searchableColumns = [
-		'name'
+		'name',
+		'schoolLevel' => [
+            'table' => 'school_levels',
+            'name'
+        ],
 	];
+
+	/**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['school_level_name'];
 
 	/**
 	 * Get the picture for school.
@@ -40,6 +52,15 @@ class School extends Model
 	{
 		return $this->hasMany('App\Calendar\SchoolPhoto\SchoolPhoto', 'school_id');
 	}
+
+	/**
+	 * Get the school level for school.
+	*/
+	public function schoolLevel()
+	{
+		return $this->belongsTo(SchoolLevel::class, 'school_level_id');
+	}
+
 
 	/**
 	 *  Check if there are photos associated with the model.
@@ -61,6 +82,17 @@ class School extends Model
             }
         }
         return false;
+    }
+
+    /**
+     * Return the school level name for the school.
+     */
+
+    public function getSchoolLevelNameAttribute()
+    {
+    	if ($this->schoolLevel)
+    		return $this->schoolLevel->name;
+    	return false;
     }
 
 }

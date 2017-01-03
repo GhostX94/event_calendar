@@ -87,4 +87,71 @@ Route::group(['prefix' => 'admin'], function ()
 		]);
 	});
 
+	/* 
+	 * ------------------- Route for SchoolLevels ---------------
+	 */
+	Route::group(['prefix' => 'schoolLevels'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.schoolLevels.index',
+				'uses' => 'SchoolLevelController@index'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.schoolLevels.store',
+			'uses' => 'SchoolLevelController@store'
+		]);
+
+		Route::get('show/{id?}', [
+			'as' => 'api.schoolLevels.show',
+			'uses' => 'SchoolLevelController@show'
+		]);
+
+		Route::patch('update/{id?}', [
+			'as' => 'api.schoolLevels.update',
+			'uses' => 'SchoolLevelController@update'
+		]);
+
+		Route::delete('delete/{id?}', [
+			'as' => 'api.schoolLevels.destroy',
+			'uses' => 'SchoolLevelController@destroy'
+		]);
+
+		Route::get('select-list', [
+			'as' => 'api.schoolLevels.select-list',
+			'uses' => 'SchoolLevelController@selectList'
+		]);
+	});
+
+	/* 
+	 * ------------------- Route for EventTargets ---------------
+	 */
+	Route::group(['prefix' => 'EventTargets'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.eventTargets.index',
+				'uses' => 'EventTargetController@index'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.eventTargets.store',
+			'uses' => 'EventTargetController@store'
+		]);
+
+		Route::get('show/{id?}', [
+			'as' => 'api.eventTargets.show',
+			'uses' => 'EventTargetController@show'
+		]);
+
+		Route::patch('update/{id?}', [
+			'as' => 'api.eventTargets.update',
+			'uses' => 'EventTargetController@update'
+		]);
+
+		Route::delete('delete/{id?}', [
+			'as' => 'api.eventTargets.destroy',
+			'uses' => 'EventTargetController@destroy'
+		]);
+	});
+
 });

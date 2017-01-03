@@ -23,6 +23,9 @@ var VueFileUpload = require('vue-upload-component/dist/vue-upload-component.min.
 
 var VueFullCalendar = require('vue-fullcalendar/dist/vue-fullcalendar.min.js')
 
+const decamelize = require('decamelize');
+
+
 Vue.use(VueResource)
 /*Vue.use(VueEditable)*/
 Vue.use(VueValidator)
@@ -146,6 +149,7 @@ Vue.http.options.emulateHTTP = true;
             flashType: null,
             url: apiUrl,
             row: objectRow,
+            foreignData: new Array(),
             searchFor: '',
             columns: tableColumns,
             sortOrder: [{
@@ -303,15 +307,18 @@ Vue.http.options.emulateHTTP = true;
                 Vue.http.headers.common['X-CSRF-TOKEN'] = token;
 
                 var formData = new FormData();
-                var keys = Object.keys(this.row);
-                var data = this.row;
-                keys.forEach(function (index) {
-                    formData.append(index, data[index]);
-                });
+                var keys = '';
+                var data = '';
+                var actionUrl = "";
 
-                if (!model || model.target) {
-                    //var actionUrl = this.url.store;
-                    var actionUrl = "";
+                if (!model || model.target) 
+                {
+                    keys = Object.keys(this.row);
+                    data = this.row;
+                    keys.forEach(function (index) {
+                        formData.append(index, data[index]);
+                    });
+
                     if (this.method == 'PATCH' || this.method == 'POST') {
                         if (this.method == 'PATCH') {
                             actionUrl = this.url.update + this.row.id;
@@ -327,33 +334,59 @@ Vue.http.options.emulateHTTP = true;
                         this.$http.delete(actionUrl, formData)
                         .then(this.success, this.failed);
                     }
-                     
-                    /*this.sendData(actionUrl, this.method, data)
-                        .then(this.success, this.failed);*/
+                }else if(related){
+                    console.log ('Related: ' + related)       
+                    console.log ('Model: ' + model)
+                }else{       
+                    //console.log ('Model: ' + model);
+                    actionUrl = this.url.foreign[model][type].url;
+                    //this.method = this.url.foreign[model][type].method;
+                    keys = Object.keys(this.row[model]);
+                    data = this.row[model];
+                    keys.forEach(function (index) {
+                        formData.append(index, data[index]);
+                    });
+                    this.$http.post(actionUrl, formData)
+                        .then(this.success2, this.failed);
                 }
             },
             success: function(response){
-                if (response.data.data) {
-                    var map = 'row';
+                var lastOpenModal = vm.lastOpenModal.pop();
+                console.log(lastOpenModal);
+                if ( response.data.data ) {
                     var data = response.data.data;
-                    this.$set(map, data);
-                    console.log("success");
-                    console.log(JSON.stringify(response.data));
+                    var actions = lastOpenModal.split('_');
+                    var map = 'row';
+                    if ( actions.length && actions[2] == 'inform' ) {
+                        map += '.' + actions[0];
+                        var field = decamelize(actions[0]);
+                        this.row[ field + '_id' ] = data.id; 
+                    }
+                    vm.$set(map, data);
+                    console.log(JSON.stringify(this.row));
                 }
                 if (this.method == 'POST' || this.method == 'PATCH' || this.method == 'DELETE')
-                    this.$broadcast('vuetable:reload'); 
+                    this.$broadcast('vuetable:reload');
                 var message = response.data.message;
-                this.flashMessage = message;
-                this.flashType = 'success'; 
+                vm.flashMessage = message;
+                vm.flashType = 'success';
             },
             success2: function(response){
+                var lastOpenModal = this.lastOpenModal.pop();              
                 if (response.data.data) {
                     var map = 'row';
                     var data = response.data.data;
-                    this.$set(map, data);
+                    var actions = lastOpenModal.split('_');
+                    if ( actions.length && actions[2] == 'inform' ) {
+                        map += '.' + actions[0];
+                        var field = decamelize(actions[0]);
+                        this.row[ field + '_id' ] = data.id; 
+                    }
                     if(response.data.imageUrl){
                         this.file = '/' + response.data.imageUrl;
                     }
+
+                    this.$set(map, data);
                     //console.log("success2");
                     //console.log(JSON.stringify(response.data));
                 }
@@ -367,11 +400,10 @@ Vue.http.options.emulateHTTP = true;
                 console.log(response);
                 this.flashMessage = this.defaultErrorMessage;
                 this.flashType = this.flashTypeDanger;
-                if (response.data) {
-                    vm.updateErrors(response.data);
+                if (response.body) {
+                    vm.updateErrors(response.body);
                     //console.log("errors", response.data);
                 }
-                //console.log("response", response.data);
             },
             updateErrors: function(errors) {
                 this.errorMessages = [];
@@ -382,7 +414,7 @@ Vue.http.options.emulateHTTP = true;
                         this.errorMessages.push(errorMgs[msg]);                       
                     }
                 }
-                //console.log("errors", this.errorMessages);
+                //console.log("errors", this.errorMessages);*/
             },
             getData: function(url = null){
                 if (!url) {
@@ -392,6 +424,26 @@ Vue.http.options.emulateHTTP = true;
                    this.sendData(url, 'GET')
                     .then(this.success2, this.failed);    
                 }
+            },
+            getForeignData: function(callUrl = null, mapVar = null, related = null, action = 'index'){
+                var foreign = this.url.foreign[related][action];
+                if(callUrl == null)
+                    callUrl = foreign.url;
+
+                var sendParams = {url: callUrl, method: foreign.method, data:{}};
+                this.$http(sendParams)
+                    .then(function(response){
+                        if(response.data.data){
+                            var data = response.data.data;
+                            var currentForeignData = vm.foreignData;
+                            currentForeignData[mapVar] = data;
+                            var count = data.length;
+                            if(count === undefined)
+                                count = Object.keys(data).length;
+                            currentForeignData[mapVar + 'Count'] = count;
+                            vm.foreignData.push(currentForeignData);
+                        }
+                    });
             },
             cleanData: function() {
                 this.row = objectRow;
@@ -411,18 +463,28 @@ Vue.http.options.emulateHTTP = true;
                 return false;
             },
             modal: function(type){
+                var number = vm.lastOpenModal.length - 1;
+                var index = (number >= 0) ? number : 0; 
+                console.log(index);
+
                 if (type == 'PATCH' || type == 'POST') {
-                    this.lastOpenModal.push('formModal');
-                    this.method = type;
-                    this.formModal = true;
-                }else if (type == 'SHOW') {
-                    this.lastOpenModal.push('showModal');
-                    this.method = type;
-                    this.showModal = true;
-                }else if (type == 'DELETE') {
-                    this.lastOpenModal.push('deleteModal');
-                    this.method = type;
-                    this.deleteModal = true;
+                    vm.lastOpenModal.push('formModal');
+                    vm.method = type;
+                    vm.formModal = true;
+                } else if (type == 'SHOW') {
+                    vm.lastOpenModal.push('showModal');
+                    vm.method = type;
+                    vm.showModal = true;
+                } else if (type == 'DELETE') {
+                    vm.lastOpenModal.push('deleteModal');
+                    vm.method = type;
+                    vm.deleteModal = true;
+                } else if (type == 'INFO') {
+                    vm.lastOpenModal.push('infoModal');
+                    vm.infoModal = true;
+                } else {
+                    vm.lastOpenModal.push(type);
+                    vm.localModals[type] = true;                
                 }
             },
             closeModal: function(modalName){
@@ -479,10 +541,13 @@ Vue.http.options.emulateHTTP = true;
                 this.getData();
                 if (action == 'view-item') {
                     this.modal('SHOW');
+                    //this.lastOpenModal.push('showModal');
                 } else if (action == 'edit-item') {
                     this.modal('PATCH');
+                    //this.lastOpenModal.push('formModal');
                 } else if (action == 'delete-item') {
                     this.modal('DELETE');
+                    //this.lastOpenModal.push('deleteModal');
                 }
             },
             'vuetable:load-success': function(response) {

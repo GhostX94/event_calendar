@@ -2,9 +2,14 @@
 var objectRow = {            
     id: "",
     name: "",
+    school_level_id: "",
     image: "",
     created_at: "",
     updated_at: "",
+    school_level: {
+        id: "",
+        name: ""
+    }
 };
 
 var tableColumns = [
@@ -17,6 +22,12 @@ var tableColumns = [
     {
         name: 'name',
         sortField: 'name',
+    },
+    {
+        name: 'school_level_name',
+        sortField: 'school_level.name',
+        title: 'School level',
+        visible: true
     },
     {
         name: 'created_at',
@@ -41,3 +52,7 @@ var actions = [
         { name: 'edit-item', label: '', icon: 'glyphicon glyphicon-pencil', class: 'btn btn-warning', extra: {title: 'Edit', 'data-toggle':"tooltip", 'data-placement': "top"} },
         { name: 'delete-item', label: '', icon: 'glyphicon glyphicon-remove', class: 'btn btn-danger', extra: {title: 'Delete', 'data-toggle':"tooltip", 'data-placement': "right" } }
 ];
+
+var modals = {
+    schoolLevel_ADD_inform: false,
+};

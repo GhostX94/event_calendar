@@ -23,6 +23,7 @@
     "vuetable": "^1.1.2"
   },
   "dependencies": {
+    "decamelize": "^1.2.0",
     "vue-fullcalendar": "^0.1.11",
     "vue-laravel-validator": "^1.0.4",
     "vue-upload-component": "^0.3.8"
