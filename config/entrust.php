@@ -19,8 +19,8 @@ return [
     | the role if it is in a different namespace.
     |
     */
-    'role' => 'App\Calendar\Role',
-
+    //'role' => 'App\Calendar\Role',
+    'role' => App\Calendar\Role\Role::class,
     /*
     |--------------------------------------------------------------------------
     | Entrust Roles Table
@@ -40,8 +40,8 @@ return [
     | Update the permission if it is in a different namespace.
     |
     */
-    'permission' => 'App\Calendar\Permission',
-
+    //'permission' => 'App\Calendar\Permission',
+    'permission' => App\Calendar\Permission\Permission::class,
     /*
     |--------------------------------------------------------------------------
     | Entrust Permissions Table
