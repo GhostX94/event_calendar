@@ -154,4 +154,36 @@ Route::group(['prefix' => 'admin'], function ()
 		]);
 	});
 
+	/* 
+	 * ------------------- Route for TypePersons ---------------
+	 */
+	Route::group(['prefix' => 'TypePersons'], function()
+	{
+		Route::get('/',[
+				'as' => 'api.typePersons.index',
+				'uses' => 'TypePersonController@index'
+		]);
+
+		Route::post('store', [
+			'as' => 'api.typePersons.store',
+			'uses' => 'TypePersonController@store'
+		]);
+
+		Route::get('show/{id?}', [
+			'as' => 'api.typePersons.show',
+			'uses' => 'TypePersonController@show'
+		]);
+
+		Route::patch('update/{id?}', [
+			'as' => 'api.typePersons.update',
+			'uses' => 'TypePersonController@update'
+		]);
+
+		Route::delete('delete/{id?}', [
+			'as' => 'api.typePersons.destroy',
+			'uses' => 'TypePersonController@destroy'
+		]);
+	});
+
+
 });

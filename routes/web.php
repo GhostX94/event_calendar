@@ -90,6 +90,19 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () 
 		]);
 	});
 
+	/* 
+	 * ------------------- Route for EvenTargets ---------------
+	 */
+	Route::group(['prefix' => 'typePersons'], function(){
+
+		Route::get('',[
+				'as' => 'typePersons.index',
+				'uses' => function(){
+					return view('admin.typePersons.index');
+				}
+		]);
+	});
+
 
 });
 
