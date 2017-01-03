@@ -18,14 +18,14 @@ class UserTableSeeder extends Seeder
 		$users [] = [
 	        'name' => 'ajpadilla88',
 	        'email' => 'ajpadilla88@gmail.com',
-	        'password' => $password ?: $password = bcrypt('secret'),
+	        'password' => bcrypt('secret'),
 	        'remember_token' => str_random(10),
     	];
 
     	$users [] = [
 	        'name' => 'tego_07_07',
 	        'email' => 'tego_07_07@hotmail.com',
-	        'password' => $password ?: $password = bcrypt('secret'),
+	        'password' => bcrypt('secret'),
 	        'remember_token' => str_random(10),
     	];
 
