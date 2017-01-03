@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Calendar\Permission\Permission;
 use App\Calendar\Role\Role;
+use App\Calendar\Permission\Permission; 
+use App\Calendar\User\User;
 
 class RolePermissionTableSeeder extends Seeder
 {
@@ -44,8 +45,13 @@ class RolePermissionTableSeeder extends Seeder
 		$deleteItem->save();
 
 
-
 		$admin->attachPermissions([$createItem, $editItem, $deleteItem]);
 		$employee->attachPermissions([$createItem, $editItem]);
+
+		$userAdmin = User::find(1);
+		$userEmployee = User::find(2);
+
+		$userAdmin->attachRole($admin);
+		$userEmployee->attachRole($employee);
     }
 }
