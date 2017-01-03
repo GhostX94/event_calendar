@@ -69,6 +69,7 @@ return [
             'driver' => 'eloquent',
             //'model' => App\User::class,
             'model' => App\Calendar\User\User::class,
+            'table' => 'users',
         ],
 
         // 'users' => [
