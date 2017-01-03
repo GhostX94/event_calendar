@@ -24,8 +24,10 @@
             <li class="user-header">
               <img src="{{ asset('images/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                @if (Auth::check())
+                  {{ Auth::user()->name }}
+                  <small>Member since Nov. 2012</small>
+                @endif
               </p>
             </li>
             <!-- Menu Body -->
@@ -49,8 +51,18 @@
                 <a href="#" class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Sign out</a>
-              </div>
+                {{--<a href="{{ url('/logout') }}" class="btn btn-default btn-flat">Sign out</a>--}}
+                <a href="{{ url('/logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();" 
+                class="btn btn-default btn-flat">
+                Logout
+              </a>
+
+              <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+              </form>
+            </div>
             </li>
           </ul>
         </li>
