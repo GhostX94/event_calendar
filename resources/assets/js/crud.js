@@ -541,13 +541,13 @@ Vue.http.options.emulateHTTP = true;
                 this.getData();
                 if (action == 'view-item') {
                     this.modal('SHOW');
-                    //this.lastOpenModal.push('showModal');
+                    this.lastOpenModal.push('showModal');
                 } else if (action == 'edit-item') {
                     this.modal('PATCH');
-                    //this.lastOpenModal.push('formModal');
+                    this.lastOpenModal.push('formModal');
                 } else if (action == 'delete-item') {
                     this.modal('DELETE');
-                    //this.lastOpenModal.push('deleteModal');
+                    this.lastOpenModal.push('deleteModal');
                 }
             },
             'vuetable:load-success': function(response) {
