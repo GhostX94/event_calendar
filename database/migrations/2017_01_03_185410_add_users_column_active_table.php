@@ -14,7 +14,7 @@ class AddUsersColumnActiveTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('active');
+            $table->boolean('active')->after('password');
         });
     }
 
