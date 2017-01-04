@@ -34,4 +34,13 @@ class TypePerson extends Model
 		'name'
 	];
 
+    /**
+     * Relationship
+     */
+
+    public function person()
+    {
+        return $this->hasOne(App\Calendar\Person\Person::class, 'type_person_id');
+    }
+
 }
