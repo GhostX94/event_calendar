@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class State extends Model
 {
- 
+
   	/**
      * The table associated with the model.
      *
      * @var string
     */
-   public $table = 'towns';
+    public $table = 'states';
 
   	/**
      * The attributes that are mass assignable.
@@ -21,7 +21,6 @@ class State extends Model
     */
    protected $fillable = [
      'name',
-     'state_id' 
    ];
 
 	/**
