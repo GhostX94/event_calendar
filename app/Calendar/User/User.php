@@ -27,4 +27,14 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     *  Relationships
+     */
+
+    public function person()
+    {
+          return $this->hasOne(App\Calendar\Person\Person::class, 'user_id');
+    }
+
 }
